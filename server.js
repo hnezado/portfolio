@@ -1,14 +1,29 @@
 const express = require("express");
+const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
+const config = require("./config.js");
 
 const app = express();
 const port = 3000;
 
 app.use(express.static("client/dist"));
+app.use(cors(config.cors));
 
 app.get("/", (req, res) => {
   res.send("Hello world!");
+});
+
+app.get("/skills", (req, res) => {
+  try {
+    const data = fs.readFileSync(path.join(__dirname, "data", "skills.json"));
+    const skills = JSON.parse(data);
+    res.json(skills);
+  } catch (err) {
+    const msg = "Error reading file";
+    console.error(msg, err);
+    res.status(500).send({ msg: msg, err: err });
+  }
 });
 
 app.get("/projects", (req, res) => {
@@ -39,5 +54,5 @@ app.get("*", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Servidor Express escuchando en http://localhost:${port}`);
+  console.log(`Listening on http://localhost:${port}`);
 });

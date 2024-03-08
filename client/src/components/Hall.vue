@@ -16,8 +16,8 @@
         >
       </div>
       <a href="#about" class="arrow-down">↓</a>
-      <div class="spruce-bg">
-        <img src="data/waves_spruce.svg" alt="waves_spruce" />
+      <div class="waves-mid">
+        <img src="data/waves_mid.svg" alt="waves_mid" />
       </div>
     </section>
     <section id="about">
@@ -47,80 +47,27 @@
       <div class="skills">
         <h3>My Skills</h3>
         <div class="carousel-container">
-          <span>&lt;</span>
+          <span @click="prevSkills" :style="getCarouselBtnStyle('prev')"
+            >&lt;</span
+          >
           <div class="carousel">
-            <ul class="skills-list">
-              <li>
-                <img src="data/logos/python.svg" alt="logo_python" /><span
-                  >Python</span
-                >
-              </li>
-              <li>
+            <ul
+              class="skills-list"
+              :style="{
+                left: `${carouselIndex * (smallScreen ? -50 : -100)}px`,
+              }"
+            >
+              <li v-for="(skill, index) in skills" :key="index">
                 <img
-                  src="data/logos/javascript.svg"
-                  alt="logo_javascript"
-                /><span>Javascript</span>
-              </li>
-              <li>
-                <img src="data/logos/html.svg" alt="logo_html" /><span
-                  >HTML</span
-                >
-              </li>
-              <li>
-                <img src="data/logos/css.svg" alt="logo_css" /><span>CSS</span>
-              </li>
-              <li>
-                <img src="data/logos/nodejs.svg" alt="logo_nodejs" /><span
-                  >Node.js</span
-                >
-              </li>
-              <li>
-                <img src="data/logos/react.svg" alt="logo_react" /><span
-                  >React</span
-                >
-              </li>
-              <li>
-                <img src="data/logos/vue.svg" alt="logo_vue" /><span>Vue</span>
-              </li>
-              <li>
-                <img src="data/logos/git.svg" alt="logo_git" /><span>Git</span>
-              </li>
-              <li>
-                <img src="data/logos/linux.svg" alt="logo_linux" /><span
-                  >Linux</span
-                >
-              </li>
-              <li>
-                <img src="data/logos/aws.svg" alt="logo_aws" /><span>AWS</span>
-              </li>
-              <li>
-                <img src="data/logos/docker.svg" alt="logo_docker" /><span
-                  >Docker</span
-                >
-              </li>
-              <li>
-                <img src="data/logos/flask.svg" alt="logo_flask" /><span
-                  >Flask</span
-                >
-              </li>
-              <li>
-                <img src="data/logos/jira.svg" alt="logo_jira" /><span
-                  >JIRA</span
-                >
-              </li>
-              <li>
-                <img src="data/logos/cobol.svg" alt="logo_cobol" /><span
-                  >Cobol</span
-                >
-              </li>
-              <li>
-                <img src="data/logos/c-sharp.svg" alt="logo_c-sharp" /><span
-                  >C#</span
-                >
+                  :src="`data/logos/${skill.name}.svg`"
+                  :alt="`logo_${skill.name}`"
+                /><span>{{ skill.fullName }}</span>
               </li>
             </ul>
           </div>
-          <span>&gt;</span>
+          <span @click="nextSkills" :style="getCarouselBtnStyle('next')"
+            >&gt;</span
+          >
         </div>
       </div>
     </section>
@@ -131,8 +78,55 @@
 export default {
   name: "HallComponent",
   data() {
-    // carouselIndex: 0
+    return {
+      smallScreen: false,
+      skills: [],
+      carouselIndex: 0,
+    };
   },
-  mounted() {},
+  mounted() {
+    this.getScreenSize();
+    this.fetchSkills();
+  },
+  methods: {
+    getScreenSize() {
+      this.smallScreen = window.innerWidth < 600;
+    },
+    async fetchSkills() {
+      try {
+        const res = await fetch(`${this.$config.serverUrl}/skills`);
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          if (data.length > 0) {
+            this.skills = data;
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching skills", error);
+      }
+    },
+    nextSkills() {
+      this.carouselIndex = this.carouselIndex + 5;
+      if (this.carouselIndex > this.skills.length - 5) {
+        this.carouselIndex = this.skills.length - 5;
+      }
+    },
+    prevSkills() {
+      this.carouselIndex = this.carouselIndex - 5;
+      if (this.carouselIndex < 0) this.carouselIndex = 0;
+    },
+    getCarouselBtnStyle(btn) {
+      const style = {};
+      if (
+        (btn === "prev" && this.carouselIndex === 0) ||
+        (btn === "next" && this.carouselIndex >= this.skills.length - 5)
+      ) {
+        style.cursor = "auto";
+        style.opacity = 0.3;
+        style.animation = "none";
+      } else style.animation = `anim-carousel-${btn}-btn 2s infinite`;
+      return style;
+    },
+  },
 };
 </script>

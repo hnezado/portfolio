@@ -1,10 +1,12 @@
-{
-    "secretSanta": {
-        "name": "Secret Santa",
+[
+    {
+        "name": "secretSanta",
+        "fullName": "Secret Santa",
         "url": "https://secret-santa.org"
     },
-    "ecoBrico": {
-        "name": "EcoBrico",
+    {
+        "name": "ecoBrico",
+        "fullName": "EcoBrico",
         "url": "https://eco-brico.org"
     }
-}
+]

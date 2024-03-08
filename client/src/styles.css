@@ -1,6 +1,6 @@
 :root {
   --charcoal-dark: #2c3e50;
-  --charcoal-light: #96a4b1;
+  --charcoal-light: "#96a4b1";
   --isabelline: #edede9;
   --linen: #f5ebe0;
   --cream: #ffe5cb;
@@ -43,6 +43,7 @@ html {
   background-color: var(--pale-dogwood);
   box-shadow: 0 5px 10px rgba(44, 33, 20, 0.15);
   z-index: 20;
+  user-select: none;
   ul {
     display: flex;
     height: 100%;
@@ -78,6 +79,8 @@ html {
   left: 0;
   z-index: -2;
   overflow: hidden;
+
+  user-select: none;
 }
 
 .main-container {
@@ -99,6 +102,7 @@ html {
   color: var(--spruce);
   background-color: var(--pale-dogwood);
   border-radius: 8px;
+  user-select: none;
   box-shadow: 0 2px 5px 1px rgba(44, 33, 20, 0.3);
   transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
@@ -192,8 +196,9 @@ html {
   top: 90%;
   color: var(--champagne-pink);
   text-decoration: none;
+  user-select: none;
   transition: text-shadow 0.3s;
-  animation: arrow-animation 2s infinite;
+  animation: arrow-animation 1s infinite;
   z-index: 10;
 }
 .arrow-down:hover,
@@ -202,11 +207,12 @@ html {
   outline: none;
 }
 
-.spruce-bg {
+.waves-mid {
   position: absolute;
   width: 100%;
   height: 151px;
-  bottom: 0;
+  bottom: -1px;
+  user-select: none;
   z-index: -1;
   img {
     width: 100%;
@@ -220,7 +226,7 @@ html {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   padding-top: 100px;
   color: var(--isabelline);
   background-color: var(--spruce);
@@ -232,27 +238,29 @@ html {
 
 .profile {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  width: 50%;
-  margin-bottom: 50px;
+  width: 600px;
+  margin-bottom: 80px;
 }
 .profile-img {
   height: 300px;
-  margin-right: 100px;
   border-radius: 15px;
   object-fit: contain;
+  user-select: none;
 }
 
 .profile-details {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  max-width: 50%;
+  max-width: 70%;
   height: 100%;
-  padding: 0 40px;
   p {
     text-align: justify;
+    width: 300px;
+    padding: 0 5px 20px;
+    margin-bottom: 20px;
     letter-spacing: 1px;
   }
 }
@@ -276,53 +284,78 @@ html {
 .skills {
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
-  padding-bottom: 20px;
   h3 {
     font-size: 2rem;
-    padding: 30px 0 40px;
+    padding-bottom: 20px;
   }
 }
 
 .carousel-container {
   display: flex;
+  justify-content: center;
   align-items: center;
-  /* width: 25%; */
-  width: 25%;
+  > span {
+    font-size: 1.5rem;
+    cursor: pointer;
+    user-select: none;
+    /* transform: translate(-10px, 0); */
+    /* animation: anim-carousel-prev-btn 2s infinite; */
+  }
 }
 
 .carousel {
-  width: 100%;
-  height: 60px;
+  position: relative;
+  width: 500px;
+  height: 100px;
   overflow: hidden;
-  margin: 0 10px;
+  margin: 0 20px;
 }
+
 .skills-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-  column-gap: 29px;
+  position: absolute;
+  display: flex;
   list-style: none;
-  grid-auto-flow: column;
+  transition: left 0.5s;
 }
 .skills-list li {
   display: flex;
   flex-direction: column;
-  /* background-color: var(--timberwolf); */
+  justify-content: center;
   align-items: center;
-  border-radius: 4px;
+  min-width: 100px;
+  height: 100px;
   img {
-    width: 40px;
-    height: 40px;
-    /* object-fit: contain; */
+    width: 50px;
+    height: 50px;
+    user-select: none;
   }
   span {
     font-size: 0.6rem;
-    padding-top: 5px;
+    padding-top: 10px;
   }
 }
 
 .footer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  bottom: 0;
+}
+.waves-bot {
+  position: absolute;
+  width: 100%;
+  height: 85px;
+  bottom: 17px;
+  user-select: none;
+  z-index: 1;
+  img {
+    width: 100%;
+    height: 85px;
+  }
+}
+.footer-bar {
   position: absolute;
   display: flex;
   justify-content: center;
@@ -331,6 +364,7 @@ html {
   height: 50px;
   bottom: 0;
   background-color: var(--pale-dogwood);
+  z-index: 2;
   a {
     padding: 0 20px;
   }
@@ -346,7 +380,7 @@ html {
   }
   .icon:hover,
   .icon:focus {
-    fill: var(--timberwolf);
+    fill: var(--spruce);
     transform: scale(1.1);
     outline: none;
   }
@@ -356,16 +390,21 @@ html {
   0% {
     margin-top: -3rem;
     opacity: 0;
+    transform: scale(1.2);
+  }
+  1% {
+    transform: scale(1.075);
   }
   5% {
     margin-top: 1rem;
   }
   7% {
     margin-top: -0.5rem;
+    transform: scale(1);
+    opacity: 1;
   }
   8% {
     margin-top: 0.25rem;
-    opacity: 1;
   }
   10% {
     margin-top: -0.125rem;
@@ -379,40 +418,84 @@ html {
   85% {
     margin-top: 0;
     opacity: 1;
-  }
-  90% {
-    opacity: 0;
+    transform: scale(1);
   }
   95% {
-    margin-top: 3rem;
+    margin-top: 2rem;
+    transform: scale(1.1);
+    opacity: 0;
   }
   100% {
     margin-top: 3rem;
+    transform: scale(1.1);
+    opacity: 0;
   }
 }
 
 @keyframes arrow-animation {
   0% {
-    margin-top: 0;
+    margin-top: -3px;
   }
-  10% {
+  /* 12% {
     margin-top: 6px;
-  }
-  15% {
-    margin-top: -2px;
-  }
-  20% {
+  } */
+  25% {
     margin-top: 3px;
   }
-  25% {
-    margin-top: 0;
+  62% {
+    margin-top: -3px;
+  }
+  75% {
+    margin-top: 3px;
   }
   100% {
-    margin-top: 0;
+    margin-top: -3px;
   }
 }
 
-@media screen and (max-width: 600px) {
+@keyframes anim-carousel-prev-btn {
+  0% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-4px, 0);
+  }
+  20% {
+    transform: translate(0, 0);
+  }
+  30% {
+    transform: translate(-2px, 0);
+  }
+  40% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes anim-carousel-next-btn {
+  0% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(4px, 0);
+  }
+  20% {
+    transform: translate(0, 0);
+  }
+  30% {
+    transform: translate(2px, 0);
+  }
+  40% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@media screen and (max-width: 767px) {
   .welcome-title {
     top: 5%;
     padding: 0 20px;
@@ -453,27 +536,28 @@ html {
   #about {
     padding-top: 70px;
     h2 {
-      margin-bottom: 25px;
+      margin-bottom: 30px;
       font-size: 1.875rem;
     }
   }
 
   .profile {
     flex-direction: column;
-    width: 100%;
+    width: 350px;
+    margin-bottom: 30px;
   }
 
   .profile-img {
     height: 150px;
-    margin-right: 0;
   }
 
   .profile-details {
-    max-width: 100%;
-    height: 100%;
-    padding: 20px 40px;
+    padding: 20px 0 0;
     p {
+      width: 100%;
       font-size: 0.75rem;
+      padding: 0;
+      margin-bottom: 0;
     }
   }
 
@@ -485,11 +569,50 @@ html {
     h4 {
       font-size: 1.125rem;
       font-weight: 600;
-      margin: 20px 0;
+      margin: 30px 0 10px;
     }
     a {
       width: 50%;
       font-size: 0.9rem;
+    }
+  }
+
+  .skills {
+    h3 {
+      font-size: 1.5rem;
+      padding: 10px 0;
+    }
+  }
+
+  .carousel-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .carousel {
+    width: 250px;
+    height: 50px;
+    overflow: hidden;
+  }
+
+  .skills-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    column-gap: 0;
+    list-style: none;
+    grid-auto-flow: column;
+  }
+  .skills-list li {
+    min-width: 50px;
+    height: 50px;
+    img {
+      width: 30px;
+      height: 30px;
+    }
+    span {
+      font-size: 0.5rem;
+      padding-top: 5px;
     }
   }
 

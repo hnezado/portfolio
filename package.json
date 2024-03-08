@@ -22,6 +22,7 @@
   "homepage": "https://github.com/hnezado/portfolio#readme",
   "dependencies": {
     "concurrently": "^8.2.2",
+    "cors": "^2.8.5",
     "express": "^4.18.2"
   }
 }

@@ -1,0 +1,62 @@
+[
+    {
+        "name": "python",
+        "fullName": "Python"
+    },
+    {
+        "name": "javascript",
+        "fullName": "Javascript"
+    },
+    {
+        "name": "html",
+        "fullName": "HTML"
+    },
+    {
+        "name": "css",
+        "fullName": "CSS"
+    },
+    {
+        "name": "nodejs",
+        "fullName": "Node.js"
+    },
+    {
+        "name": "react",
+        "fullName": "React"
+    },
+    {
+        "name": "vue",
+        "fullName": "Vue"
+    },
+    {
+        "name": "git",
+        "fullName": "Git"
+    },
+    {
+        "name": "linux",
+        "fullName": "Linux"
+    },
+    {
+        "name": "aws",
+        "fullName": "AWS"
+    },
+    {
+        "name": "docker",
+        "fullName": "Docker"
+    },
+    {
+        "name": "flask",
+        "fullName": "Flask"
+    },
+    {
+        "name": "jira",
+        "fullName": "JIRA"
+    },
+    {
+        "name": "cobol",
+        "fullName": "COBOL"
+    },
+    {
+        "name": "csharp",
+        "fullName": "C#"
+    }
+]
