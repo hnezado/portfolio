@@ -1,0 +1,10 @@
+{
+    "secretSanta": {
+        "name": "Secret Santa",
+        "url": "https://secret-santa.org"
+    },
+    "ecoBrico": {
+        "name": "EcoBrico",
+        "url": "https://eco-brico.org"
+    }
+}
