@@ -295,13 +295,22 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  > span {
-    font-size: 1.5rem;
-    cursor: pointer;
-    user-select: none;
-    /* transform: translate(-10px, 0); */
-    /* animation: anim-carousel-prev-btn 2s infinite; */
-  }
+}
+.carousel-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 50%;
+  transition: background-color 0.3s, color 0.3s;
+}
+.carousel-btn:hover {
+  background-color: var(--champagne-pink);
+  color: var(--spruce);
 }
 
 .carousel {

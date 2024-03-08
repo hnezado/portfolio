@@ -47,9 +47,13 @@
       <div class="skills">
         <h3>My Skills</h3>
         <div class="carousel-container">
-          <span @click="prevSkills" :style="getCarouselBtnStyle('prev')"
-            >&lt;</span
+          <div
+            class="carousel-btn"
+            @click="prevSkills"
+            :style="getCarouselBtnStyle('prev')"
           >
+            &lt;
+          </div>
           <div class="carousel">
             <ul
               class="skills-list"
@@ -65,9 +69,13 @@
               </li>
             </ul>
           </div>
-          <span @click="nextSkills" :style="getCarouselBtnStyle('next')"
-            >&gt;</span
+          <div
+            class="carousel-btn"
+            @click="nextSkills"
+            :style="getCarouselBtnStyle('next')"
           >
+            &gt;
+          </div>
         </div>
       </div>
     </section>
