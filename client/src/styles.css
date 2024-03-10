@@ -130,13 +130,13 @@ html {
 
 #welcome {
   position: relative;
-  font-size: 1.5rem;
   height: calc(100vh - 50px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: var(--spruce);
+  font-size: 1.5rem;
 }
 
 .welcome-title {
@@ -325,7 +325,7 @@ html {
   position: absolute;
   display: flex;
   list-style: none;
-  transition: left 0.5s;
+  transition: left 1s ease-in-out;
 }
 .skills-list li {
   display: flex;
@@ -392,6 +392,85 @@ html {
     fill: var(--spruce);
     transform: scale(1.1);
     outline: none;
+  }
+}
+
+#projects {
+  height: calc(100vh - 50px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  color: var(--spruce);
+  font-size: 1.5rem;
+}
+
+#contact {
+  height: calc(100vh - 50px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--spruce);
+  font-size: 1.5rem;
+  h1 {
+    margin: 50px 0;
+  }
+  p {
+    margin: 30px 0 50px;
+  }
+  span {
+    font-size: 0.8rem;
+  }
+}
+
+.contact-form {
+  display: grid;
+  width: 80%;
+  max-width: 600px;
+  margin-bottom: 50px;
+  grid-template-rows: repeat(5, auto);
+  grid-template-columns: 1fr 3fr;
+  > label {
+    width: 100%;
+    padding-right: 40px;
+    text-align: right;
+    align-self: center;
+    font-size: 1.2rem;
+  }
+  > input {
+    width: 100%;
+    height: 30px;
+    padding: 5px 10px;
+    margin: 10px 0;
+    align-self: center;
+    border: 0;
+    border-radius: 5px;
+    outline: none;
+    transition: box-shadow 0.3s;
+  }
+  > input:focus {
+    box-shadow: 0 0 10px 3px rgba(44, 33, 20, 0.15);
+  }
+  > textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 5px 10px;
+    margin: 10px 0;
+    font-family: "Rubik", Helvetica, Arial, sans-serif;
+    border: 0;
+    border-radius: 5px;
+    resize: none;
+    outline: none;
+    transition: box-shadow 0.3s;
+  }
+  > textarea:focus {
+    box-shadow: 0 0 10px 3px rgba(44, 33, 20, 0.15);
+  }
+  > button {
+    grid-column: span 2;
+    justify-self: center;
+    width: 200px;
+    margin-top: 25px;
   }
 }
 
