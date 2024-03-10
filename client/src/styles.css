@@ -416,7 +416,7 @@ html {
     margin: 50px 0;
   }
   p {
-    margin: 30px 0 50px;
+    margin: 30px 20px 50px 20px;
   }
   span {
     font-size: 0.8rem;
@@ -701,6 +701,27 @@ html {
     span {
       font-size: 0.5rem;
       padding-top: 5px;
+    }
+  }
+
+  #contact {
+    h1 {
+      margin: 30px 0;
+      font-size: 1.825rem;
+    }
+    p {
+      margin: 10px 20px 20px;
+    }
+  }
+  .contact-form {
+    max-width: 300px;
+    > label {
+      min-width: 100px;
+      padding-right: 10px;
+      font-size: 1rem;
+    }
+    > textarea {
+      min-height: 90px;
     }
   }
 
