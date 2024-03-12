@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <img src="data/waves_bot.svg" alt="waves_bot" class="waves-bot" />
+    <img src="data/waves_bot.svg" alt="waves_bot" class="footer-waves" />
     <div class="footer-bar">
       <a
         class="icon"
@@ -19,7 +19,9 @@
           />
         </svg>
       </a>
-      <span>Made by Hector Martinez</span>
+      <p :class="{ 'tiny-screen': tinyScreen }">
+        <span>Made by</span><span>Hector Martinez</span>
+      </p>
       <a
         href="https://www.linkedin.com/in/hector-md"
         target="_blank"
@@ -52,5 +54,22 @@
 <script>
 export default {
   name: "FooterComponent",
+  data() {
+    return {
+      tinyScreen: false,
+    };
+  },
+  mounted() {
+    this.updateScreenSize();
+    window.addEventListener("resize", this.updateScreenSize);
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.updateScreenSize);
+  },
+  methods: {
+    updateScreenSize() {
+      this.tinyScreen = window.innerWidth <= 350;
+    },
+  },
 };
 </script>

@@ -10,6 +10,9 @@
 </template>
 
 <script>
+import mixin from "@/mixin.js";
+import "@/styles/Projects.css";
+
 export default {
   name: "ProjectsComponent",
   data() {
@@ -17,7 +20,9 @@ export default {
       projects: [],
     };
   },
+  mixins: [mixin],
   mounted() {
+    this.updateRoute(this.$route.path);
     this.fetchProjects();
   },
   methods: {

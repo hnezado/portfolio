@@ -1,12 +1,12 @@
 <template>
-  <Navbar />
+  <Navbar :currentRoute="currentRoute" />
   <Background />
-  <div class="main-container"><router-view /></div>
+  <div class="main-container"><router-view @updateRoute="updateRoute" /></div>
   <Footer />
 </template>
 
 <script>
-import "@/styles.css";
+import "@/styles/main.css";
 import Navbar from "./components/Navbar.vue";
 import Background from "./components/Background.vue";
 import Footer from "./components/Footer.vue";
@@ -17,6 +17,16 @@ export default {
     Navbar,
     Background,
     Footer,
+  },
+  data() {
+    return {
+      currentRoute: "",
+    };
+  },
+  methods: {
+    updateRoute(value) {
+      this.currentRoute = value;
+    },
   },
 };
 </script>

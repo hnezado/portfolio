@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import mixin from "@/mixin.js";
+import "@/styles/Contact.css";
 import axios from "axios";
 
 export default {
@@ -42,6 +44,10 @@ export default {
         message: "",
       },
     };
+  },
+  mixins: [mixin],
+  mounted() {
+    this.updateRoute(this.$route.path);
   },
   methods: {
     async sendEmail() {
