@@ -3,10 +3,10 @@
     <section id="welcome">
       <div class="welcome-content">
         <h1 class="welcome-title">Welcome to my creative hub</h1>
-        <!-- <div class="name-text">
+        <div class="name-text">
           <p>My name is</p>
           <div class="anim-name"><span>Hector</span><span>Martinez</span></div>
-        </div> -->
+        </div>
         <div class="welcome-description">
           <p>
             Software developer and creative thinker. I specialize in both coding

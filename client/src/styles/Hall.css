@@ -362,6 +362,15 @@
 }
 
 @media only screen and (max-width: 600px) {
+  .name-text {
+    /* height: ; */
+    .anim-name {
+      flex-direction: column;
+      height: 7rem;
+      font-size: 3rem;
+    }
+  }
+
   .about-content {
     padding-top: 70px;
   }
