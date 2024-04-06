@@ -48,16 +48,6 @@ app.get("/projects", (req, res) => {
   }
 });
 
-app.get("/cv", (req, res) => {
-  try {
-    res.sendFile(path.join(__dirname, "data", "cv_hector_martinez.pdf"));
-  } catch (err) {
-    const msg = "Error sending file";
-    console.error(msg, err);
-    res.status(500).send({ msg: msg, err: err });
-  }
-});
-
 app.post("/send-email", async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;

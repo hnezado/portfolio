@@ -14,7 +14,7 @@
       <button class="button" type="submit">Send message</button>
     </form>
     <span>
-      Or if you prefer you can send me and email directly to <br />
+      Or if you prefer you can send me an email directly to <br />
       <a
         :href="`mailto:hnezado@gmail.com?subject=<From%20${
           formData.name

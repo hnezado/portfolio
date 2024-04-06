@@ -40,7 +40,19 @@
                 loads of patience to the team. I don't hesitate to bring
                 proactive solutions to the table for our digital projects.
                 <br /><br />If you wish to know more, I invite you to check out
-                my <a class="link-cv" href="/cv">CV</a>.
+                my
+                <a
+                  class="link-light"
+                  target="_blank"
+                  href="data/cv_hector_martinez.pdf"
+                  >CV</a
+                >
+                (<a
+                  class="link-light"
+                  href="data/cv_hector_martinez.pdf"
+                  download
+                  >download</a
+                >).
               </p>
               <div class="profile-contact" ref="profileContactTitle">
                 <h4
@@ -104,9 +116,9 @@ export default {
       smallScreen: false,
       skills: [],
       elementsToObserve: [
-        // ["profileDetails", 0.1],
-        // ["profileContactTitle", 0.1],
-        // ["carousel"],
+        ["profileDetails", 0.1],
+        ["profileContactTitle", 0.1],
+        ["carousel"],
       ],
       animStart: {},
       skillsPerView: 5,
@@ -116,17 +128,10 @@ export default {
   mixins: [mixin],
   mounted() {
     this.updateRoute(this.$route.path);
-    // this.getScreenSize();
     this.fetchSkills();
     this.elementsToObserve.forEach((args) => this.observeElement(...args));
   },
   methods: {
-    getScreenSize() {
-      // const screenWidth = window.innerWidth
-      // if (screenWidth < 300) this.screenWidth = "extraSmall"
-      // else if (screenWidth < 600) this.smallScreen = "phone"
-      // else if (screenWidth <)
-    },
     async fetchSkills() {
       try {
         const res = await fetch(`${this.$config.serverUrl}/skills`);

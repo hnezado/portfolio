@@ -1,4 +1,88 @@
 #contact {
-  height: 100%;
-  min-height: calc(100vh - 150px);
+  height: calc(100vh - 150px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  color: var(--spruce);
+  font-size: 1.5rem;
+  p {
+    margin: 0 20px;
+  }
+  span {
+    font-size: 0.8rem;
+  }
+}
+
+.contact-form {
+  display: grid;
+  width: 80%;
+  max-width: 600px;
+  grid-template-rows: repeat(5, auto);
+  grid-template-columns: 1fr 3fr;
+  grid-gap: 8px;
+  > label {
+    width: 100%;
+    padding-right: 20px;
+    text-align: right;
+    align-self: center;
+    font-size: 1.2rem;
+  }
+  > input {
+    width: 100%;
+    height: 30px;
+    padding: 5px 10px;
+    align-self: center;
+    border: 0;
+    border-radius: 5px;
+    outline: none;
+    transition: box-shadow 0.3s;
+  }
+  > input:focus {
+    box-shadow: 0 0 10px 3px rgba(44, 33, 20, 0.15);
+  }
+  > textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 5px 10px;
+    font-family: "Rubik", Helvetica, Arial, sans-serif;
+    border: 0;
+    border-radius: 5px;
+    resize: none;
+    outline: none;
+    transition: box-shadow 0.3s;
+  }
+  > textarea:focus {
+    box-shadow: 0 0 10px 3px rgba(44, 33, 20, 0.15);
+  }
+  > button {
+    grid-column: span 2;
+    justify-self: center;
+    width: 100px;
+    min-width: 200px;
+    margin-top: 25px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .contact-form {
+    > label {
+      padding-right: 10px;
+    }
+    > button {
+      min-width: 180px;
+    }
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .contact-form {
+    grid-template-columns: 2fr 3fr;
+    label {
+      padding-right: 10px;
+    }
+    > button {
+      min-width: 160px;
+    }
+  }
 }
