@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
 require("dotenv").config();
 const config = require("./config.js");
 
@@ -14,15 +14,15 @@ app.use(express.static("client"));
 app.use(cors(config.cors));
 
 // nodemailer configuration
-const transporter = nodemailer.createTransport(config.emailCredentials);
-transporter.verify(function (error, success) {
-  if (error) {
-    console.log("Server is not ready to receive messages");
-    console.log(error);
-  } else {
-    console.log("Server is ready to take our messages");
-  }
-});
+// const transporter = nodemailer.createTransport(config.emailCredentials);
+// transporter.verify(function (error, success) {
+//   if (error) {
+//     console.log("Server is not ready to receive messages");
+//     console.log(error);
+//   } else {
+//     console.log("Server is ready to take our messages");
+//   }
+// });
 
 app.get("/skills", (req, res) => {
   try {
@@ -75,6 +75,6 @@ app.get("*", (req, res) => {
   //   res.sendFile("client/dist/index.html", { root: __dirname });
 });
 
-app.listen(port, () => {
-  console.log(`Listening on http://localhost:${port}`);
+app.listen(port, "127.0.0.1", () => {
+  console.log(`Listening on ${port}`);
 });
