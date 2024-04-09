@@ -1,0 +1,11 @@
+<svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1440 100"
+          preserveAspectRatio="xMidYMin slice"
+        >
+          <path
+            fill="#614e3a"
+            fill-opacity="1"
+            d="M0,60L80,60C160,60,320,60,480,40.7C640,30,800,1,960,0.7C1120,1,1280,30,1440,60L1440,100L0,100Z"
+          ></path>
+        </svg>
