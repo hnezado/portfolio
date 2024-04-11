@@ -75,6 +75,6 @@ app.get("*", (req, res) => {
   //   res.sendFile("client/dist/index.html", { root: __dirname });
 });
 
-app.listen(port, "127.0.0.1", () => {
+app.listen(port, () => {
   console.log(`Listening on ${port}`);
 });

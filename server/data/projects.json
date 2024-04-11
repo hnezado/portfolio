@@ -2,36 +2,69 @@
     {
         "name": "ecoBrico",
         "fullName": "EcoBrico",
-        "url": "https://eco-brico.org"
+        "description": "",
+        "url": "https://eco-brico.org",
+        "github": "https://github.com/hnezado/eco-brico",
+        "imgsQty": 0,
+        "technologies": []
     },
     {
         "name": "secretSanta",
         "fullName": "Secret Santa",
-        "url": "https://secret-santa.org"
+        "description": "",
+        "url": "",
+        "github": "https://github.com/hnezado/secret_santa",
+        "imgsQty": 0,
+        "technologies": []
     },
     {
         "name": "setorium",
         "fullName": "Setorium",
-        "url": "https://setorium.org"
+        "description": "",
+        "url": "https://setorium.org",
+        "github": "https://github.com/Setorium",
+        "imgsQty": 0,
+        "technologies": []
     },
     {
         "name": "appPlant",
         "fullName": "AppPlant",
-        "url": "https://applant.org"
+        "description": "",
+        "url": "https://applant.org",
+        "github": "https://github.com/FINAL-PROJECT-RMT-FT-MARCH21",
+        "imgsQty": 0,
+        "technologies": []
     },
     {
         "name": "alloyMeApp",
         "fullName": "Alloy Me App",
-        "url": "https://allow-me-app.org"
+        "description": "",
+        "url": "https://allow-me-app.org",
+        "github": "https://github.com/hnezado/AlloyMeApp",
+        "imgsQty": 0,
+        "technologies": []
     },
     {
         "name": "toEatOrNotToEat",
         "fullName": "To Eat or not To Eat",
-        "url": "https://to-eat-or-not-to-eat.org"
+        "description": "",
+        "url": "https://to-eat-or-not-to-eat.org",
+        "github": "https://github.com/hnezado/ToEatOrNotToEat",
+        "imgsQty": 0,
+        "technologies": []
     },
     {
         "name": "hangTheWitch",
         "fullName": "Hang The Witch",
-        "url": "https://hang-the-witch.org"
+        "description": "Hang The Witch is a hangman-style game where players try to guess letters in a hidden word to save a witch from being hanged. The game features a difficulty select screen and an in-game menu that allows to mute sound/music among other options.<br><br>Developed mainly in <b>Python</b> using <em>Pygame</em> and <em>random-words</em> for word generation.<br><br><em style=\"font-size: 0.7rem;\">*Note: All images and models were created by me using Photoshop and Blender.</em>",
+        "url": "",
+        "github": "https://github.com/hnezado/HangTheWitch",
+        "imgsQty": 5,
+        "technologies": [
+            "Python",
+            "Pygame",
+            "Random-Words",
+            "Pycharm"
+        ]
     }
 ]

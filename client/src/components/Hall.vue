@@ -72,6 +72,7 @@
           <div class="carousel-container">
             <div
               class="carousel-btn"
+              :class="{ 'carousel-btn-enabled': carouselIndex !== 0 }"
               @click="prevSkills"
               :style="getCarouselBtnStyle('prev')"
             >
@@ -93,6 +94,10 @@
             </div>
             <div
               class="carousel-btn"
+              :class="{
+                'carousel-btn-enabled':
+                  carouselIndex < skills.length - skillsPerView,
+              }"
               @click="nextSkills"
               :style="getCarouselBtnStyle('next')"
             >
@@ -170,8 +175,6 @@ export default {
         (btn === "next" &&
           this.carouselIndex >= this.skills.length - this.skillsPerView)
       ) {
-        style.cursor = "auto";
-        style.opacity = 0.3;
         style.animation = "none";
       } else style.animation = `anim-carousel-${btn}-btn 2s infinite`;
       return style;
