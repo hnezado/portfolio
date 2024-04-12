@@ -81,6 +81,10 @@
   padding: 100px 0 50px;
 }
 
+.proj-wip {
+  width: 200px;
+}
+
 .projs-index-btn {
   font-size: 0.8rem;
   text-decoration: none;

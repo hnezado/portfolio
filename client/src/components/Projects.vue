@@ -87,6 +87,12 @@
       :id="proj.name"
     >
       <h2>{{ proj.fullName }}</h2>
+      <img
+        v-if="proj.description.length <= 0"
+        src="data/projects/wip.png"
+        alt="Work In Progress"
+        class="proj-wip"
+      />
       <div class="techs">
         <h6>Development tools and technologies:</h6>
         <div class="proj-techs">
