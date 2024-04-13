@@ -65,4 +65,4 @@ Hello! I am Hector, a Software Developer passionate about Python programming and
 
 - 🐱 [GitHub](https://github.com/hnezado)
 - 🌐 [LinkedIn](https://www.linkedin.com/in/hector-md/)
-- 📧 [Email](contact@hnezado.com)
+- 📧 [Email](mailto:contact@hnezado.com)
