@@ -7,7 +7,7 @@ Portfolio's URL: https://hnezado.com/
 ---
 
 Hello! I am Hector, a Software Developer passionate about Python programming and web development. Skilled in backend and frontend technologies, I enjoy creating robust applications that blend functionality with great user experience.
-[⬇️ Let's connect! ⬇️](#🔗-contact-me)
+[⬇️ Let's connect! ⬇️](https://github.com/hnezado/portfolio/tree/main?tab=readme-ov-file#-contact-me)
 
 ## ⚙️ Skills
 
