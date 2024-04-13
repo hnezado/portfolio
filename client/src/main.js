@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import { createRouter, createWebHistory } from "vue-router";
-import config from "./config_dev.json";
+import config from "./config.json";
 
 import HallPage from "./components/Hall.vue";
 import ProjectsPage from "./components/Projects.vue";

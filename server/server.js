@@ -14,15 +14,15 @@ app.use(express.static("client"));
 app.use(cors(config.cors));
 
 // nodemailer configuration
-// const transporter = nodemailer.createTransport(config.emailCredentials);
-// transporter.verify(function (error, success) {
-//   if (error) {
-//     console.log("Server is not ready to receive messages");
-//     console.log(error);
-//   } else {
-//     console.log("Server is ready to take our messages");
-//   }
-// });
+const transporter = nodemailer.createTransport(config.emailCredentials);
+transporter.verify(function (error, success) {
+  if (error) {
+    console.log("Server is not ready to receive messages");
+    console.log(error);
+  } else {
+    console.log("Server is ready to take our messages");
+  }
+});
 
 app.get("/skills", (req, res) => {
   try {
@@ -42,7 +42,7 @@ app.get("/projects", (req, res) => {
     const projects = JSON.parse(data);
     res.json(projects);
   } catch (err) {
-    const msg = "Error reading file";
+    const msg = "Error reading projects file";
     console.error(msg, err);
     res.status(500).send({ msg: msg, err: err });
   }
@@ -71,10 +71,10 @@ app.post("/send-email", async (req, res) => {
 });
 
 app.get("*", (req, res) => {
-  res.send("Path not defined");
-  //   res.sendFile("client/dist/index.html", { root: __dirname });
+  const msg = "Path not defined";
+  res.send({ msg: msg });
 });
 
 app.listen(port, () => {
-  console.log(`Listening on ${port}`);
+  console.log(`Listening on port ${port}`);
 });
