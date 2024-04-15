@@ -1,4 +1,4 @@
 {
   "serverUrl": "https://15.237.229.159",
-  "projectsPath": "data/projects/apps"
+  "appsPath": "data/projects/apps"
 }

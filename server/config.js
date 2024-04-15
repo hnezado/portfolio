@@ -9,9 +9,13 @@ module.exports = {
   emailCredentials: {
     service: "gmail",
     auth: {
-      user: process.env.EMAIL_FROM,
-      pass: process.env.APP_PASS,
+      user: process.env.PORTFOLIO_EMAIL_FROM,
+      pass: process.env.PORTFOLIO_EMAIL_APP_PASS,
     },
     logger: true,
+  },
+  httpsServer: {
+    certificate: process.env.PORTFOLIO_CERTIFICATE_PATH,
+    privateKey: process.env.PORTFOLIO_PRIVATE_KEY,
   },
 };

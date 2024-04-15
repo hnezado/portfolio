@@ -12,7 +12,7 @@
           <li>
             Click to
             <a
-              :href="`${getProjectsPath()}/${currentProjectPopup.name}/${
+              :href="`${getAppsPath()}/${currentProjectPopup.name}/${
                 currentProjectPopup.name
               }.zip`"
               class="link popup-link-download"
@@ -148,7 +148,6 @@ export default {
   data() {
     return {
       projects: [],
-      projectsPath: null,
       popupProjIndex: null,
       carouselProjIndex: null,
       carouselImgIndex: null,
@@ -176,10 +175,11 @@ export default {
     },
   },
   methods: {
-    getProjectsPath() {
-      return this.$config.projectsPath;
+    getAppsPath() {
+      return this.$config.appsPath;
     },
     async fetchProjects() {
+      console.log("Retrieving projects");
       try {
         const res = await fetch(`${this.$config.serverUrl}/projects`);
         const data = await res.json();
@@ -191,6 +191,7 @@ export default {
       } catch (error) {
         console.error("Error fetching projects", error);
       }
+      console.log("projects:", this.projects);
     },
     async checkDownloadable() {
       for (let i = 0; i < this.projects.length; i++) {

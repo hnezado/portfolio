@@ -1,13 +1,20 @@
 const express = require("express");
-const cors = require("cors");
+const https = require("https");
 const fs = require("fs");
+const cors = require("cors");
 const path = require("path");
-// const nodemailer = require("nodemailer");
+const nodemailer = require("nodemailer");
 require("dotenv").config();
 const config = require("./config.js");
 
 const app = express();
 const port = 3000;
+
+// HTTPS Server Configuration
+const httpsOptions = {
+  key: fs.readFileSync(config.httpsServer.privateKey),
+  cert: fs.readFileSync(config.httpsServer.certificate),
+};
 
 app.use(express.json());
 app.use(express.static("client"));
@@ -52,8 +59,8 @@ app.post("/send-email", async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
     const emailData = {
-      from: process.env.EMAIL_FROM,
-      to: process.env.EMAIL_TO,
+      from: process.env.PORTFOLIO_EMAIL_FROM,
+      to: process.env.PORTFOLIO_EMAIL_TO,
       subject: `New message from ${name} (${email}) - ${subject}`,
       text: message,
     };

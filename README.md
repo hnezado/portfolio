@@ -63,8 +63,7 @@ Hello! I am Hector, a Software Developer passionate about Python programming and
 
 ## 🔗 Contact Me
 
-[![Github](https://img.icons8.com/?size=32&id=AZOZNnY73haj&format=png)](https://github.com/hnezado)
-[![LinkedIn](https://img.icons8.com/?size=32&id=13930&format=png)](https://www.linkedin.com/in/hector-md/)
-[![](https://img.icons8.com/?size=32&id=MFd4aKzItnZK&format=png)](mailto:contact@hnezado.com) \
-\
-contact@hnezado.com
+[![](https://img.icons8.com/?size=32&id=AZOZNnY73haj&format=png)](https://github.com/hnezado "Visit my Github Page")
+[![](https://img.icons8.com/?size=32&id=13930&format=png)](https://www.linkedin.com/in/hector-md/ "Visit my Linkedin Page")
+[![](https://img.icons8.com/?size=32&id=MFd4aKzItnZK&format=png)](mailto:contact@hnezado.com "Or contact me via e-mail") \
+[contact@hnezado.com](mailto:contact@hnezado.com "Send me an e-mail")
