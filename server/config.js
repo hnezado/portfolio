@@ -1,3 +1,20 @@
+const aws = require("aws-sdk");
+
+// AWS Configuration
+aws.config.update({ region: "eu-west-3" });
+const ssm = new aws.ssm();
+
+const getParam = function (param) {
+  ssm.getParameter({ Name: param, WithDecryption: true }, (err, data) => {
+    try {
+      const parameterValue = data.Parameter.Value;
+      console.log("Getting parameter value. ParameterValue:", parameterValue);
+    } catch (err) {
+      console.error("Error obtaining parameter value", err);
+    }
+  });
+};
+
 module.exports = {
   cors: {
     origin: "*",
@@ -9,13 +26,13 @@ module.exports = {
   emailCredentials: {
     service: "gmail",
     auth: {
-      user: process.env.PORTFOLIO_EMAIL_FROM,
-      pass: process.env.PORTFOLIO_EMAIL_APP_PASS,
+      user: getParam("PORTFOLIO_EMAIL_FROM"),
+      pass: getParam("PORTFOLIO_EMAIL_APP_PASS"),
     },
     logger: true,
   },
   httpsServer: {
-    certificate: process.env.PORTFOLIO_CERTIFICATE_PATH,
-    privateKey: process.env.PORTFOLIO_PRIVATE_KEY,
+    certificate: getParam("PORTFOLIO_CERTIFICATE_PATH"),
+    privateKey: getParam("PORTFOLIO_PRIVATE_KEY"),
   },
 };

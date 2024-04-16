@@ -1,5 +1,6 @@
 const express = require("express");
-const https = require("https");
+// const aws = require("aws-sdk");
+// const https = require("https");
 const fs = require("fs");
 const cors = require("cors");
 const path = require("path");
@@ -7,14 +8,16 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 const config = require("./config.js");
 
+console.log("Config file content:", json(config));
+
 const app = express();
 const port = 3000;
 
 // HTTPS Server Configuration
-const httpsOptions = {
-  key: fs.readFileSync(config.httpsServer.privateKey),
-  cert: fs.readFileSync(config.httpsServer.certificate),
-};
+// const httpsOptions = {
+//   key: fs.readFileSync(config.httpsServer.privateKey),
+//   cert: fs.readFileSync(config.httpsServer.certificate),
+// };
 
 app.use(express.json());
 app.use(express.static("client"));
