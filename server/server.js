@@ -8,6 +8,8 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 const config = require("./config.js");
 
+console.log("Imports hechos");
+console.log("Config file content (sin stringify):", config);
 console.log("Config file content:", JSON.stringify(config));
 
 const app = express();
