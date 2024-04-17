@@ -10,7 +10,7 @@ const config = require("./config.js");
 
 async function initialize() {
   const configEnd = await config;
-  console.log("*** Config file content ***\n", config);
+  console.log("*** Config file content ***\n", JSON.stringify(config));
 }
 
 initialize();
