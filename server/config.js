@@ -37,16 +37,14 @@ async function getConfig() {
 
   return {
     cors: {
-      cors: {
-        origin: "*",
-        methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
-        credentials: true,
-        optionsSuccessStatus: 204,
-      },
-      port: 8084,
-      emailCredentials,
-      httpsServer,
+      origin: "*",
+      methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
+      credentials: true,
+      optionsSuccessStatus: 204,
     },
+    port: 8084,
+    emailCredentials,
+    httpsServer,
   };
 }
 
