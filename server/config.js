@@ -18,7 +18,7 @@ const getParam = function (param) {
     }
   );
   console.log("getParam() result is:", result);
-  return result;
+  return result.response;
 };
 
 module.exports = {
