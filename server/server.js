@@ -8,8 +8,14 @@ const path = require("path");
 require("dotenv").config();
 const config = require("./config.js");
 
-console.log("Imports hechos");
-console.log("*** Config file content ***\n", config);
+async function initialize() {
+  const configEnd = await config;
+  console.log("*** Config file content ***\n", config);
+}
+
+initialize();
+
+// console.log("*** Config file content ***\n", config);
 
 const app = express();
 const port = 3000;

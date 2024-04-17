@@ -20,24 +20,56 @@ async function getParam(param) {
   return result;
 }
 
-module.exports = {
-  cors: {
-    origin: "*",
-    methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
-    credentials: true,
-    optionsSuccessStatus: 204,
-  },
-  port: 8084,
-  emailCredentials: {
+async function getConfig() {
+  const emailCredentials = {
     service: "gmail",
     auth: {
       user: await getParam("PORTFOLIO_EMAIL_FROM"),
       pass: await getParam("PORTFOLIO_EMAIL_APP_PASS"),
     },
     logger: true,
-  },
-  httpsServer: {
+  };
+
+  const httpsServer = {
     certificate: await getParam("PORTFOLIO_CERTIFICATE_PATH"),
     privateKey: await getParam("PORTFOLIO_PRIVATE_KEY"),
-  },
-};
+  };
+
+  return {
+    cors: {
+      cors: {
+        origin: "*",
+        methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
+        credentials: true,
+        optionsSuccessStatus: 204,
+      },
+      port: 8084,
+      emailCredentials,
+      httpsServer,
+    },
+  };
+}
+
+module.exports = getConfig();
+
+// module.exports = {
+//   cors: {
+//     origin: "*",
+//     methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
+//     credentials: true,
+//     optionsSuccessStatus: 204,
+//   },
+//   port: 8084,
+//   emailCredentials: {
+//     service: "gmail",
+//     auth: {
+//       user: await getParam("PORTFOLIO_EMAIL_FROM"),
+//       pass: await getParam("PORTFOLIO_EMAIL_APP_PASS"),
+//     },
+//     logger: true,
+//   },
+//   httpsServer: {
+//     certificate: await getParam("PORTFOLIO_CERTIFICATE_PATH"),
+//     privateKey: await getParam("PORTFOLIO_PRIVATE_KEY"),
+//   },
+// };
