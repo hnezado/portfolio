@@ -9,8 +9,7 @@ require("dotenv").config();
 const config = require("./config.js");
 
 console.log("Imports hechos");
-console.log("Config file content (sin stringify):", config);
-console.log("Config file content:", JSON.stringify(config));
+console.log("*** Config file content ***\n", config);
 
 const app = express();
 const port = 3000;

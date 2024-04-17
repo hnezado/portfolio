@@ -4,16 +4,20 @@ const AWS = require("aws-sdk");
 AWS.config.update({ region: "eu-west-3" });
 const ssm = new AWS.SSM();
 
-function getParam(param) {
-  ssm.getParameter({ Name: param, WithDecryption: false }, (err, data) => {
-    try {
-      const parameterValue = data.Parameter.Value;
-      console.log("Getting parameter value. ParameterValue:", parameterValue);
-      return parameterValue;
-    } catch (err) {
-      console.error("Error obtaining parameter value", err);
+async function getParam(param) {
+  const result = await ssm.getParameter(
+    { Name: param, WithDecryption: false },
+    (err, data) => {
+      try {
+        const parameterValue = data.Parameter.Value;
+        console.log("Getting parameter value. ParameterValue:", parameterValue);
+        return parameterValue;
+      } catch (err) {
+        console.error("Error obtaining parameter value", err);
+      }
     }
-  });
+  );
+  return result;
 }
 
 module.exports = {
@@ -27,13 +31,13 @@ module.exports = {
   emailCredentials: {
     service: "gmail",
     auth: {
-      user: getParam("PORTFOLIO_EMAIL_FROM"),
-      pass: getParam("PORTFOLIO_EMAIL_APP_PASS"),
+      user: await getParam("PORTFOLIO_EMAIL_FROM"),
+      pass: await getParam("PORTFOLIO_EMAIL_APP_PASS"),
     },
     logger: true,
   },
   httpsServer: {
-    certificate: getParam("PORTFOLIO_CERTIFICATE_PATH"),
-    privateKey: getParam("PORTFOLIO_PRIVATE_KEY"),
+    certificate: await getParam("PORTFOLIO_CERTIFICATE_PATH"),
+    privateKey: await getParam("PORTFOLIO_PRIVATE_KEY"),
   },
 };
