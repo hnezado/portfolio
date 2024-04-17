@@ -8,7 +8,7 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 const config = require("./config.js");
 
-console.log("Config file content:", json(config));
+console.log("Config file content:", JSON.stringify(config));
 
 const app = express();
 const port = 3000;
