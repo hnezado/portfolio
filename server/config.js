@@ -11,14 +11,14 @@ const getParam = function (param) {
       try {
         const parameterValue = data.Parameter.Value;
         // console.log("Getting parameter value. ParameterValue:", parameterValue);
-        return data.Parameter.Value;
+        return parameterValue;
       } catch (err) {
         console.error("Error obtaining parameter value", err);
       }
     }
   );
   console.log("getParam() result is:", result);
-  return result.response;
+  return result;
 };
 
 module.exports = {
