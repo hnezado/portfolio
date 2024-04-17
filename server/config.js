@@ -8,10 +8,11 @@ const getParam = function (param) {
   ssm.getParameter({ Name: param, WithDecryption: false }, (err, data) => {
     try {
       const parameterValue = data.Parameter.Value;
-      console.log("Getting parameter value. ParameterValue:", parameterValue);
+      // console.log("Getting parameter value. ParameterValue:", parameterValue);
     } catch (err) {
       console.error("Error obtaining parameter value", err);
     }
+    return data.Parameter.Value;
   });
 };
 
