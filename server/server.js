@@ -3,7 +3,7 @@ const https = require("https");
 const fs = require("fs");
 const cors = require("cors");
 const path = require("path");
-// const nodemailer = require("nodemailer");
+const nodemailer = require("nodemailer");
 require("dotenv").config();
 const config = require("./config.js");
 
@@ -15,15 +15,15 @@ app.use(express.static("client"));
 app.use(cors(config.cors));
 
 // nodemailer configuration
-// const transporter = nodemailer.createTransport(config.emailCredentials);
-// transporter.verify(function (error, success) {
-//   if (error) {
-//     console.log("Server is not ready to receive messages");
-//     console.log(error);
-//   } else {
-//     console.log("Server is ready to take our messages");
-//   }
-// });
+const transporter = nodemailer.createTransport(config.emailCredentials);
+transporter.verify(function (error, success) {
+  if (error) {
+    console.log("Server is not ready to receive messages");
+    console.log(error);
+  } else {
+    console.log("Server is ready to take our messages");
+  }
+});
 
 app.get("/skills", (req, res) => {
   try {
@@ -49,27 +49,27 @@ app.get("/projects", (req, res) => {
   }
 });
 
-// app.post("/send-email", async (req, res) => {
-//   try {
-//     const { name, email, subject, message } = req.body;
-//     const emailData = {
-//       from: process.env.PORTFOLIO_EMAIL_FROM,
-//       to: process.env.PORTFOLIO_EMAIL_TO,
-//       subject: `New message from ${name} (${email}) - ${subject}`,
-//       text: message,
-//     };
-//     await transporter.sendMail(emailData);
-//     res.status(200).send("Email sent successfully");
-//   } catch (err) {
-//     const msg = "Error sending email";
-//     console.error(msg, err);
+app.post("/send-email", async (req, res) => {
+  try {
+    const { name, email, subject, message } = req.body;
+    const emailData = {
+      from: process.env.PORTFOLIO_EMAIL_FROM,
+      to: process.env.PORTFOLIO_EMAIL_TO,
+      subject: `New message from ${name} (${email}) - ${subject}`,
+      text: message,
+    };
+    await transporter.sendMail(emailData);
+    res.status(200).send("Email sent successfully");
+  } catch (err) {
+    const msg = "Error sending email";
+    console.error(msg, err);
 
-//     if (err.response) {
-//       console.error("SMTP Error Response:", err.response.toString());
-//     }
-//     res.status(500).send({ msg: msg, err: err });
-//   }
-// });
+    if (err.response) {
+      console.error("SMTP Error Response:", err.response.toString());
+    }
+    res.status(500).send({ msg: msg, err: err });
+  }
+});
 
 app.get("*", (req, res) => {
   const msg = "Path not defined";

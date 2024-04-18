@@ -179,7 +179,6 @@ export default {
       return this.$config.appsPath;
     },
     async fetchProjects() {
-      console.log("Retrieving projects");
       try {
         const res = await fetch(`${this.$config.serverUrl}/projects`);
         const data = await res.json();
@@ -191,7 +190,6 @@ export default {
       } catch (error) {
         console.error("Error fetching projects", error);
       }
-      console.log("projects:", this.projects);
     },
     async checkDownloadable() {
       for (let i = 0; i < this.projects.length; i++) {
