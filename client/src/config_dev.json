@@ -1,4 +1,4 @@
 {
-  "serverUrl": "https://15.237.229.159:3000/api",
+  "serverUrl": "https://15.237.229.159:3000",
   "appsPath": "data/apps"
 }
