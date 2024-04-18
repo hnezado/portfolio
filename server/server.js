@@ -10,9 +10,9 @@ const config = require("./config.js");
 
 async function initialize() {
   const configEnd = await config;
-  console.log("*** Config file content ***\n", config);
-  console.log("emailCredentials:", config.emailCredentials);
-  console.log("httpsServer:", config.httpsServer);
+  console.log("*** Config file content ***\n", configEnd);
+  console.log("emailCredentials:", configEnd.emailCredentials);
+  console.log("httpsServer:", configEnd.httpsServer);
 }
 
 initialize();
