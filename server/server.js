@@ -6,18 +6,18 @@ const cors = require("cors");
 const path = require("path");
 // const nodemailer = require("nodemailer");
 require("dotenv").config();
-const config = require("./config.js");
+const config = await require("./config.js");
 
-async function initialize() {
-  const configEnd = await config;
-  console.log("*** Config file content ***\n", configEnd);
-  console.log("emailCredentials:", configEnd.emailCredentials);
-  console.log("httpsServer:", configEnd.httpsServer);
-}
+// async function initialize() {
+//   const configEnd = await config;
+//   console.log("*** Config file content ***\n", configEnd);
+//   console.log("emailCredentials:", configEnd.emailCredentials);
+//   console.log("httpsServer:", configEnd.httpsServer);
+// }
 
-initialize();
+// initialize();
 
-// console.log("*** Config file content ***\n", config);
+console.log("*** Config file content ***\n", config);
 
 const app = express();
 
