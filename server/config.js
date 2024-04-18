@@ -31,8 +31,8 @@ async function getConfig() {
   };
 
   const httpsServer = {
-    certificate: await getParam("PORTFOLIO_CERTIFICATE_PATH"),
-    privateKey: await getParam("PORTFOLIO_PRIVATE_KEY"),
+    certificate: JSON.stringify(await getParam("PORTFOLIO_CERTIFICATE_PATH")),
+    privateKey: JSON.stringify(await getParam("PORTFOLIO_PRIVATE_KEY")),
   };
 
   return {
