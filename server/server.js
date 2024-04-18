@@ -71,7 +71,7 @@ app.get("*", (req, res) => {
 async function initialize() {
   try {
     const config = await configPromise;
-    console.log("*** Config file content ***\n", configEnd);
+    console.log("*** Config file content ***\n", config);
     app.use(cors(config.cors));
 
     // Nodemailer Configuration
@@ -87,8 +87,8 @@ async function initialize() {
 
     // HTTPS Server Configuration
     const httpsOptions = {
-      key: fs.readFileSync(configEnd.httpsServer.privateKey),
-      cert: fs.readFileSync(configEnd.httpsServer.certificate),
+      key: fs.readFileSync(config.httpsServer.privateKey),
+      cert: fs.readFileSync(config.httpsServer.certificate),
     };
 
     const server = https.createServer(httpsOptions, app);
