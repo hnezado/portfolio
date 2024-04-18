@@ -20,7 +20,6 @@ initialize();
 // console.log("*** Config file content ***\n", config);
 
 const app = express();
-const port = 3000;
 
 // HTTPS Server Configuration
 // const httpsOptions = {
@@ -94,6 +93,6 @@ app.get("*", (req, res) => {
   res.send({ msg: msg });
 });
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+app.listen(config.port, () => {
+  console.log(`Listening on port ${config.port}`);
 });

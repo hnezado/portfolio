@@ -42,7 +42,7 @@ async function getConfig() {
       credentials: true,
       optionsSuccessStatus: 204,
     },
-    port: 8084,
+    port: 443,
     emailCredentials,
     httpsServer,
   };
