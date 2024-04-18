@@ -1,6 +1,5 @@
 const express = require("express");
-// const aws = require("aws-sdk");
-// const https = require("https");
+const https = require("https");
 const fs = require("fs");
 const cors = require("cors");
 const path = require("path");
@@ -8,23 +7,8 @@ const path = require("path");
 require("dotenv").config();
 const config = require("./config.js");
 
-// async function initialize() {
-//   const configEnd = await config;
-//   console.log("*** Config file content ***\n", configEnd);
-//   console.log("emailCredentials:", configEnd.emailCredentials);
-//   console.log("httpsServer:", configEnd.httpsServer);
-// }
-
-// initialize();
-
 const app = express();
 const port = 3000;
-
-// HTTPS Server Configuration
-// const httpsOptions = {
-//   key: fs.readFileSync(config.httpsServer.privateKey),
-//   cert: fs.readFileSync(config.httpsServer.certificate),
-// };
 
 app.use(express.json());
 app.use(express.static("client"));
@@ -92,6 +76,31 @@ app.get("*", (req, res) => {
   res.send({ msg: msg });
 });
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Listening on port ${port}`);
+// });
+
+// HTTPS Server Configuration
+async function initialize() {
+  try {
+    const configEnd = await config;
+    console.log("*** Config file content ***\n", configEnd);
+    console.log("emailCredentials:", configEnd.emailCredentials);
+    console.log("httpsServer:", configEnd.httpsServer);
+
+    const httpsOptions = {
+      key: fs.readFileSync(configEnd.httpsServer.privateKey),
+      cert: fs.readFileSync(configEnd.httpsServer.certificate),
+    };
+
+    const server = https.createServer(httpsOptions, app);
+
+    server.listen(port, () => {
+      console.log(`Listening on port ${port}`);
+    });
+  } catch (err) {
+    console.error("Error initializing server:", err);
+  }
+}
+
+initialize();
