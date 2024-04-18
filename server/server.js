@@ -17,10 +17,8 @@ const config = require("./config.js");
 
 // initialize();
 
-console.log("*** Config file content ***\n", config);
-
 const app = express();
-const port = 443;
+const port = 3000;
 
 // HTTPS Server Configuration
 // const httpsOptions = {
