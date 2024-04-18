@@ -6,7 +6,7 @@ const cors = require("cors");
 const path = require("path");
 // const nodemailer = require("nodemailer");
 require("dotenv").config();
-const config = await require("./config.js");
+const config = require("./config.js");
 
 // async function initialize() {
 //   const configEnd = await config;
@@ -20,6 +20,7 @@ const config = await require("./config.js");
 console.log("*** Config file content ***\n", config);
 
 const app = express();
+const port = 443;
 
 // HTTPS Server Configuration
 // const httpsOptions = {
@@ -93,6 +94,6 @@ app.get("*", (req, res) => {
   res.send({ msg: msg });
 });
 
-app.listen(config.port, () => {
-  console.log(`Listening on port ${config.port}`);
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });
