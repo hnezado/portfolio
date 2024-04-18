@@ -14,17 +14,6 @@ app.use(express.json());
 app.use(express.static("client"));
 app.use(cors(config.cors));
 
-// nodemailer configuration
-const transporter = nodemailer.createTransport(config.emailCredentials);
-transporter.verify(function (error, success) {
-  if (error) {
-    console.log("Server is not ready to receive messages");
-    console.log(error);
-  } else {
-    console.log("Server is ready to take our messages");
-  }
-});
-
 app.get("/skills", (req, res) => {
   try {
     const data = fs.readFileSync(path.join(__dirname, "data", "skills.json"));
@@ -80,7 +69,6 @@ app.get("*", (req, res) => {
 //   console.log(`Listening on port ${port}`);
 // });
 
-// HTTPS Server Configuration
 async function initialize() {
   try {
     const configEnd = await config;
@@ -88,6 +76,18 @@ async function initialize() {
     console.log("emailCredentials:", configEnd.emailCredentials);
     console.log("httpsServer:", configEnd.httpsServer);
 
+    // Nodemailer Configuration
+    const transporter = nodemailer.createTransport(config.emailCredentials);
+    transporter.verify(function (error, success) {
+      if (error) {
+        console.log("Server is not ready to receive messages");
+        console.log(error);
+      } else {
+        console.log("Server is ready to take our messages");
+      }
+    });
+
+    // HTTPS Server Configuration
     const httpsOptions = {
       key: fs.readFileSync(configEnd.httpsServer.privateKey),
       cert: fs.readFileSync(configEnd.httpsServer.certificate),
