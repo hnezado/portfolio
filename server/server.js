@@ -5,14 +5,13 @@ const cors = require("cors");
 const path = require("path");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
-const config = require("./config.js");
+const configPromise = require("./config.js");
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 app.use(express.static("client"));
-app.use(cors(config.cors));
 
 app.get("/skills", (req, res) => {
   try {
@@ -71,10 +70,9 @@ app.get("*", (req, res) => {
 
 async function initialize() {
   try {
-    const configEnd = await config;
+    const config = await configPromise;
     console.log("*** Config file content ***\n", configEnd);
-    console.log("emailCredentials:", configEnd.emailCredentials);
-    console.log("httpsServer:", configEnd.httpsServer);
+    app.use(cors(config.cors));
 
     // Nodemailer Configuration
     const transporter = nodemailer.createTransport(config.emailCredentials);
@@ -99,7 +97,7 @@ async function initialize() {
       console.log(`Listening on port ${port}`);
     });
   } catch (err) {
-    console.error("Error initializing server:", err);
+    console.error("Error initializing server.\n", err);
   }
 }
 
