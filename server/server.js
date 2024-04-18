@@ -15,7 +15,7 @@ async function initialize() {
   console.log("httpsServer:", configEnd.httpsServer);
 }
 
-initialize();
+await initialize();
 
 // console.log("*** Config file content ***\n", config);
 
