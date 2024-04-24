@@ -63,7 +63,7 @@ export default {
           }
         );
 
-        // Clean and reset form fields
+        // Clear and reset form fields
         Object.keys(this.formData).forEach((key) => {
           this.formData[key] = "";
         });

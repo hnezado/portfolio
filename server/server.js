@@ -6,12 +6,27 @@ const path = require("path");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 const configPromise = require("./config.js");
+let config;
 
 const app = express();
 const port = 3000;
+let server;
+
+// nodemailer
+let transporter;
 
 app.use(express.json());
 app.use(express.static("client"));
+
+// DEV
+app.use(
+  cors({
+    origin: "*",
+    methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
+    credentials: true,
+    optionsSuccessStatus: 204,
+  })
+);
 
 app.get("/skills", (req, res) => {
   try {
@@ -41,8 +56,8 @@ app.post("/send-email", async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
     const emailData = {
-      from: process.env.PORTFOLIO_EMAIL_FROM,
-      to: process.env.PORTFOLIO_EMAIL_TO,
+      from: config.email.sender,
+      to: config.email.recipients,
       subject: `New message from ${name} (${email}) - ${subject}`,
       text: message,
     };
@@ -64,18 +79,21 @@ app.get("*", (req, res) => {
   res.send({ msg: msg });
 });
 
+// DEV
 // app.listen(port, () => {
 //   console.log(`Listening on port ${port}`);
 // });
+//
 
 async function initialize() {
   try {
-    const config = await configPromise;
+    config = await configPromise;
+    config.email.recipients = config.email.recipients.split(",");
     console.log("*** Config file content ***\n", config);
     app.use(cors(config.cors));
 
     // Nodemailer Configuration
-    const transporter = nodemailer.createTransport(config.emailCredentials);
+    transporter = nodemailer.createTransport(config.email.credentials);
     transporter.verify(function (error, success) {
       if (error) {
         console.log("Server is not ready to receive messages");
@@ -91,7 +109,7 @@ async function initialize() {
       cert: fs.readFileSync(config.httpsServer.certificate),
     };
 
-    const server = https.createServer(httpsOptions, app);
+    server = https.createServer(httpsOptions, app);
 
     server.listen(port, () => {
       console.log(`Listening on port ${port}`);

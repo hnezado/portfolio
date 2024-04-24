@@ -139,7 +139,10 @@ export default {
   methods: {
     async fetchSkills() {
       try {
-        const res = await fetch(`${this.$config.serverUrl}/skills`);
+        const res = await fetch(`${this.$config.serverUrl}/skills`, {
+          method: "GET",
+          mode: "cors",
+        });
         const data = await res.json();
         if (Array.isArray(data)) {
           if (data.length > 0) {

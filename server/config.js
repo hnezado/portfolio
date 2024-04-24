@@ -19,13 +19,17 @@ async function getParam(param) {
 }
 
 async function getConfig() {
-  const emailCredentials = {
-    service: "gmail",
-    auth: {
-      user: await getParam("PORTFOLIO_EMAIL_FROM"),
-      pass: await getParam("PORTFOLIO_EMAIL_APP_PASS"),
+  const email = {
+    credentials: {
+      service: "gmail",
+      auth: {
+        user: await getParam("PORTFOLIO_EMAIL_FROM"),
+        pass: await getParam("PORTFOLIO_EMAIL_APP_PASS"),
+      },
+      logger: true,
     },
-    logger: true,
+    sender: await getParam("PORTFOLIO_EMAIL_FROM"),
+    recipients: await getParam("PORTFOLIO_EMAIL_TO"),
   };
 
   const httpsServer = {
@@ -40,31 +44,9 @@ async function getConfig() {
       credentials: true,
       optionsSuccessStatus: 204,
     },
-    emailCredentials,
+    email,
     httpsServer,
   };
 }
 
 module.exports = getConfig();
-
-// module.exports = {
-//   cors: {
-//     origin: "*",
-//     methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
-//     credentials: true,
-//     optionsSuccessStatus: 204,
-//   },
-//   port: 8084,
-//   emailCredentials: {
-//     service: "gmail",
-//     auth: {
-//       user: await getParam("PORTFOLIO_EMAIL_FROM"),
-//       pass: await getParam("PORTFOLIO_EMAIL_APP_PASS"),
-//     },
-//     logger: true,
-//   },
-//   httpsServer: {
-//     certificate: await getParam("PORTFOLIO_CERTIFICATE_PATH"),
-//     privateKey: await getParam("PORTFOLIO_PRIVATE_KEY"),
-//   },
-// };

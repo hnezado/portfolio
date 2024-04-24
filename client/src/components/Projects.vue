@@ -106,12 +106,6 @@
       </div>
       <span v-html="proj.description" class="proj-description"></span>
       <div class="proj-btns">
-        <!-- <a
-          v-if="proj.downloadable"
-          :href="`${projectsPath}/${proj.name}.zip`"
-          download
-          class="button"
-        > -->
         <a
           v-if="proj.downloadable"
           @click="openPopup(projIndex)"
@@ -119,7 +113,7 @@
         >
           Download
         </a>
-        <a v-else :href="proj.url" class="button">Go to App</a>
+        <a v-else :href="proj.url" target="_blank" class="button">Go to App</a>
       </div>
       <a :href="proj.github" target="_blank" class="link check-github"
         ><b>Check it on GitHub ↗</b>
