@@ -1,5 +1,5 @@
 <template>
-  <div id="projects">
+  <div id="projects" ref="scrollWatcher">
     <div
       v-if="popupProjIndex !== null || carouselProjIndex !== null"
       class="overlay"
@@ -33,6 +33,13 @@
         </button>
       </div>
     </div>
+    <a
+      href="#"
+      class="btn-index"
+      :class="{ 'btn-index-show': isIndexBtnShown }"
+    >
+      ▲ Back To Index ▲
+    </a>
     <div v-if="carouselProjIndex !== null" class="carousel-container-proj">
       <div @click="closeCarousel" class="carousel-bg"></div>
       <div class="carousel carousel-proj">
@@ -129,7 +136,8 @@
           class="proj-img"
         />
       </div>
-      <a href="#" class="link projs-index-btn">▲ Go to index ▲</a>
+      <div><br /></div>
+      <!-- <a href="#" class="link projs-index-btn">▲ Go to index ▲</a> -->
     </section>
   </div>
 </template>
@@ -144,6 +152,7 @@ export default {
   data() {
     return {
       projects: [],
+      isIndexBtnShown: false,
       popupProjIndex: null,
       projDownloadUrl: null,
       carouselProjIndex: null,
@@ -152,10 +161,14 @@ export default {
   },
   mixins: [mixin],
   async mounted() {
+    window.addEventListener("scroll", this.checkScrollPos);
     this.updateRoute(this.$route.path);
     await this.fetchProjects();
     await this.checkDownloadable();
     await this.getImgPaths();
+  },
+  beforeUnmount() {
+    window.removeEventListener("scroll", this.checkScrollPos);
   },
   computed: {
     currentProjectPopup() {
@@ -175,9 +188,6 @@ export default {
     },
   },
   methods: {
-    // getAppsPath() {
-    //   return this.$config.appsPath;
-    // },
     async fetchProjects() {
       try {
         const res = await fetch(`${this.$config.serverUrl}/projects`);
@@ -212,12 +222,14 @@ export default {
         this.projects[i]["imgsPaths"] = paths;
       }
     },
+    checkScrollPos() {
+      this.isIndexBtnShown = window.scrollY !== 0;
+    },
     async getProjUrl() {
       const res = await axios.post(`${this.$config.serverUrl}/download-url`, {
         fileName: `${this.currentProjectPopup.name}.zip`,
       });
       this.projDownloadUrl = res.data.downloadUrl;
-      console.log("projDownloadUrl:", this.projDownloadUrl);
     },
     openPopup(popupProjIndex) {
       this.popupProjIndex = popupProjIndex;
@@ -226,7 +238,6 @@ export default {
     closePopup() {
       this.popupProjIndex = null;
       this.projDownloadUrl = null;
-      console.log("projDownloadUrl:", this.projDownloadUrl);
     },
     openCarousel(carouselProjIndex, carouselImgIndex) {
       this.carouselProjIndex = carouselProjIndex;
