@@ -12,13 +12,14 @@
           <li>
             Click to
             <a
-              :href="`${getAppsPath()}/${currentProjectPopup.name}/${
-                currentProjectPopup.name
-              }.zip`"
+              v-if="projDownloadUrlIsString"
+              :href="projDownloadUrl"
               class="link popup-link-download"
+              target="_blank"
               download
               >Download</a
             >
+            <a v-else><del>Download</del></a>
             to get the <b>{{ currentProjectPopup.name }}.zip</b> file
           </li>
           <li>Extract all the content into a folder on your computer</li>
@@ -136,6 +137,7 @@
 <script>
 import mixin from "@/mixin.js";
 import "@/styles/Projects.css";
+import axios from "axios";
 
 export default {
   name: "ProjectsComponent",
@@ -143,6 +145,7 @@ export default {
     return {
       projects: [],
       popupProjIndex: null,
+      projDownloadUrl: null,
       carouselProjIndex: null,
       carouselImgIndex: null,
     };
@@ -161,6 +164,9 @@ export default {
       }
       return null;
     },
+    projDownloadUrlIsString() {
+      return typeof this.projDownloadUrl === "string";
+    },
     currentProjectCarousel() {
       if (this.carouselProjIndex !== null) {
         return this.projects[this.carouselProjIndex];
@@ -169,9 +175,9 @@ export default {
     },
   },
   methods: {
-    getAppsPath() {
-      return this.$config.appsPath;
-    },
+    // getAppsPath() {
+    //   return this.$config.appsPath;
+    // },
     async fetchProjects() {
       try {
         const res = await fetch(`${this.$config.serverUrl}/projects`);
@@ -206,11 +212,21 @@ export default {
         this.projects[i]["imgsPaths"] = paths;
       }
     },
+    async getProjUrl() {
+      const res = await axios.post(`${this.$config.serverUrl}/download-url`, {
+        fileName: `${this.currentProjectPopup.name}.zip`,
+      });
+      this.projDownloadUrl = res.data.downloadUrl;
+      console.log("projDownloadUrl:", this.projDownloadUrl);
+    },
     openPopup(popupProjIndex) {
       this.popupProjIndex = popupProjIndex;
+      this.getProjUrl();
     },
     closePopup() {
       this.popupProjIndex = null;
+      this.projDownloadUrl = null;
+      console.log("projDownloadUrl:", this.projDownloadUrl);
     },
     openCarousel(carouselProjIndex, carouselImgIndex) {
       this.carouselProjIndex = carouselProjIndex;

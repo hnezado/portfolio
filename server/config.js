@@ -10,7 +10,6 @@ async function getParam(param) {
       .getParameter({ Name: param, WithDecryption: false })
       .promise();
     const parameterValue = data.Parameter.Value;
-    console.log("Getting parameter value. ParameterValue:", parameterValue);
     return parameterValue;
   } catch (err) {
     console.error("Error obtaining parameter value", err);
@@ -46,6 +45,7 @@ async function getConfig() {
     },
     email,
     httpsServer,
+    bucketName: await getParam("PORTFOLIO_APPS_BUCKET_NAME"),
   };
 }
 

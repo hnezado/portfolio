@@ -51,7 +51,6 @@ export default {
   },
   methods: {
     async sendEmail() {
-      console.log("formData:", this.formData);
       try {
         const res = await axios.post(
           `${this.$config.serverUrl}/send-email`,
@@ -69,7 +68,7 @@ export default {
         });
 
         const response = res.data;
-        console.log("res:", response);
+        console.log("Response from server:", response);
       } catch (error) {
         console.error("Error posting email data", error);
       }

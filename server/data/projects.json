@@ -3,7 +3,7 @@
         "name": "ecoBrico",
         "fullName": "EcoBrico",
         "description": "",
-        "url": "https://eco-brico.org",
+        "url": "https://eco-brico.hnezado.com",
         "github": "https://github.com/hnezado/eco-brico",
         "imgsQty": 0,
         "technologies": []
@@ -21,7 +21,7 @@
         "name": "setorium",
         "fullName": "Setorium",
         "description": "",
-        "url": "https://setorium.org",
+        "url": "https://setorium.hnezado.com",
         "github": "https://github.com/Setorium",
         "imgsQty": 0,
         "technologies": []
@@ -30,7 +30,7 @@
         "name": "applant",
         "fullName": "Applant",
         "description": "",
-        "url": "https://applant.org",
+        "url": "https://applant.hnezado.com",
         "github": "https://github.com/FINAL-PROJECT-RMT-FT-MARCH21",
         "imgsQty": 0,
         "technologies": []
@@ -39,7 +39,7 @@
         "name": "alloyMeApp",
         "fullName": "Alloy Me App",
         "description": "",
-        "url": "https://allow-me-app.org",
+        "url": "https://allow-me-app.hnezado.com",
         "github": "https://github.com/hnezado/AlloyMeApp",
         "imgsQty": 0,
         "technologies": []
@@ -47,10 +47,10 @@
     {
         "name": "toEatOrNotToEat",
         "fullName": "To Eat or not To Eat",
-        "description": "To Eat or Not To Eat is a survival game where players must manage their hunger and thirst to survive in a forest environment. Players have to search for food and water, and avoid hazards to stay alive. The game features a dynamic hunger and thirst system, mechanics for cooking food, and environmental dangers that players must avoid.<br><br>Developed primarily in <b>JavaScript</b>, <b>HTML</b>, and <b>CSS</b> as the final project for the Frontend module of a Full-Stack Web Development Bootcamp. The game utilizes interactive web elements and custom CSS designs to create an immersive forest experience for players.",
+        "description": "To Eat or Not To Eat is a survival game where players must manage their hunger and thirst to survive in a forest environment. Players have to search for food and water, and avoid hazards to stay alive. The game features a dynamic hunger and thirst system, mechanics for cooking food, and environmental dangers that players must avoid.<br><br>Developed primarily in <b>JavaScript</b>, <b>HTML</b>, and <b>CSS</b> as the final project for the Frontend module of a Full-Stack Web Development Bootcamp.",
         "url": "https://to-eat-or-not-to-eat.hnezado.com",
         "github": "https://github.com/hnezado/ToEatOrNotToEat",
-        "imgsQty": 0,
+        "imgsQty": 5,
         "technologies": [
             "JavaScript",
             "HTML",

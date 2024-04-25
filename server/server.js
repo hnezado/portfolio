@@ -5,8 +5,14 @@ const cors = require("cors");
 const path = require("path");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
-const configPromise = require("./config.js");
+const configPromise = require("./config_dev.js");
+const AWS = require("aws-sdk");
+
 let config;
+
+// AWS Configuration
+AWS.config.update({ region: "eu-west-3" });
+const s3 = new AWS.S3();
 
 const app = express();
 const port = 3000;
@@ -52,6 +58,26 @@ app.get("/projects", (req, res) => {
   }
 });
 
+app.post("/download-url", async (req, res) => {
+  try {
+    const { fileName } = req.body;
+    console.log("bucketName:", config.bucketName);
+    const params = {
+      Bucket: config.bucketName,
+      Key: fileName,
+      Expires: 3600,
+    };
+    const url = s3.getSignedUrl("getObject", params);
+    console.log("type of data of url:", typeof url);
+    console.log("url:", url);
+    res.json({ downloadUrl: url });
+  } catch (err) {
+    const msg = "Error generating download URL";
+    console.error(msg, err);
+    res.status(500).send({ msg: msg, err: err });
+  }
+});
+
 app.post("/send-email", async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
@@ -79,17 +105,10 @@ app.get("*", (req, res) => {
   res.send({ msg: msg });
 });
 
-// DEV
-// app.listen(port, () => {
-//   console.log(`Listening on port ${port}`);
-// });
-//
-
 async function initialize() {
   try {
     config = await configPromise;
     config.email.recipients = config.email.recipients.split(",");
-    console.log("*** Config file content ***\n", config);
     app.use(cors(config.cors));
 
     // Nodemailer Configuration

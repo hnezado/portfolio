@@ -20,7 +20,7 @@
         </svg>
       </a>
       <p :class="{ 'tiny-screen': tinyScreen }">
-        <span>Made by</span><span>Hector Martinez</span>
+        <span>Crafted by</span><span>Hector Martinez</span>
       </p>
       <a
         href="https://www.linkedin.com/in/hector-md"
