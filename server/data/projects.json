@@ -29,25 +29,47 @@
     {
         "name": "applant",
         "fullName": "Applant",
-        "description": "",
+        "description": "Applant is a comprehensive web application featuring a botanical insights blog and a plant e-store. Users can filter plants by several criteria and add desired items to their cart, with a functional payment system. User roles include a seller (administrator) with blog and stock management privileges and a customer with shopping and favorite-saving options.<br><br>The Frontend was developed mainly through <b>React</b> and the Backend using <b>MongoDB</b>, <b>Express</b>, <b>Node.js</b> and <em>Stripe</em>. This project showcases the culmination of a Full-Stack Web Development Bootcamp, completed by a wonderful team of three in just over a week.",
         "url": "https://applant.hnezado.com",
         "github": "https://github.com/FINAL-PROJECT-RMT-FT-MARCH21",
         "imgsQty": 0,
-        "technologies": []
+        "technologies": [
+            "Mongo DB",
+            "Express",
+            "Node.js",
+            "React",
+            "Axios",
+            "HTML",
+            "SASS"
+        ]
     },
     {
         "name": "alloyMeApp",
         "fullName": "Alloy Me App",
-        "description": "",
-        "url": "https://allow-me-app.hnezado.com",
+        "description": "Alloy Me App is an interactive chemistry learning web app designed to engage users in exploring chemical elements and alloys specifically. Users can create accounts to access personalized study materials and quizzes, enhancing their knowledge and understanding of chemistry concepts. In addition, admin users have privileges to manage users, alloys, and quizzes.<br><br>Developed primarily in <b>JavaScript</b>, <b>HTML</b>, <b>CSS (Sass)</b>, <b>NodeJS</b> and <b>MongoDB</b> using <em>express</em> and <em>handlebars</em> as the final project for the Backend module of a Full-Stack Web Development Bootcamp.",
+        "url": "https://alloy-me-app.hnezado.com",
         "github": "https://github.com/hnezado/AlloyMeApp",
-        "imgsQty": 0,
-        "technologies": []
+        "imgsQty": 5,
+        "technologies": [
+            "JavaScript",
+            "HTML",
+            "CSS",
+            "Sass",
+            "NodeJS",
+            "Express",
+            "MongoDB",
+            "Mongoose",
+            "Handlebars",
+            "Passport",
+            "Bcrypt",
+            "Atlas MongoDB",
+            "VSCode"
+        ]
     },
     {
         "name": "toEatOrNotToEat",
         "fullName": "To Eat or not To Eat",
-        "description": "To Eat or Not To Eat is a survival game where players must manage their hunger and thirst to survive in a forest environment. Players have to search for food and water, and avoid hazards to stay alive. The game features a dynamic hunger and thirst system, mechanics for cooking food, and environmental dangers that players must avoid.<br><br>Developed primarily in <b>JavaScript</b>, <b>HTML</b>, and <b>CSS</b> as the final project for the Frontend module of a Full-Stack Web Development Bootcamp.",
+        "description": "To Eat or Not To Eat is a survival game where players must manage their hunger and thirst to survive in a forest environment. Players have to search for food and water, and avoid hazards to stay alive. The game features a dynamic hunger and thirst system, mechanics for cooking food, and environmental dangers that players must avoid.<br><br>Developed primarily in <b>JavaScript</b>, <b>HTML</b> and <b>CSS</b> as the final project for the Frontend module of a Full-Stack Web Development Bootcamp.",
         "url": "https://to-eat-or-not-to-eat.hnezado.com",
         "github": "https://github.com/hnezado/ToEatOrNotToEat",
         "imgsQty": 5,

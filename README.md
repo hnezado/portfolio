@@ -21,45 +21,45 @@ Hello! I am Hector, a Software Developer passionate about Python programming and
 
 ### EcoBrico
 
-- **Description**: Responsive DIY products e-commerce app for customers and administrators.
+- **Description**: Responsive DIY products e-commerce app for customers and owners.
 - **GitHub Repository**: https://github.com/hnezado/eco-brico
-- **Live Demo**:
+- **Live Demo**: https://eco-brico.hnezado.com/
 
 ### Secret Santa
 
-- **Description**: Highly configurable app for pairing people in Secret Santa's game, ensuring no repeat of previous year's gifts exchanges.
+- **Description**: Highly configurable app for pairing people in Secret Santa's game, ensuring no repetition of previous year's gifts exchanges.
 - **GitHub Repository**: https://github.com/hnezado/secret_santa
-- **Download**:
+- **Download**: https://portfolio.hnezado.com/projects#secretSanta
 
 ### Setorium
 
 - **Description**: Mushroom pictures identifier app.
 - **GitHub Repository**: https://github.com/Setorium/webapp
-- **Live Demo**:
+- **Live Demo**: https://setorium.hnezado.com/
 
 ### Applant
 
 - **Description**: Curiosity blog and e-commerce about plants.
 - **GitHub Repository**: https://github.com/FINAL-PROJECT-RMT-FT-MARCH21
-- **Live Demo**:
+- **Live Demo**: https://applant.hnezado.com/
 
 ### Alloy Me App
 
-- **Description**: Interactive chemistry (alloys) learning web app.
+- **Description**: Interactive chemistry (alloys) learning web app with students and teachers roles.
 - **GitHub Repository**: https://github.com/hnezado/AlloyMeApp
-- **Live Demo**:
+- **Live Demo**: https://alloy-me-app.hnezado.com/
 
 ### To Eat or not To Eat
 
-- **Description**: Game where the player has to survive in the wild. To stay alive the player need to keep in line his/her hunger and thirst.
+- **Description**: Game where the player has to survive in the wild keeping in line his/her hunger and thirst.
 - **GitHub Repository**: https://github.com/hnezado/ToEatOrNotToEat
-- **Live Demo**:
+- **Live Demo**: https://to-eat-or-not-to-eat.hnezado.com/
 
 ### Hang The Witch
 
 - **Description**: Hangman-style game where players try to guess letters in a hidden word to save a witch from being hanged.
 - **GitHub Repository**: https://github.com/hnezado/HangTheWitch
-- **Download**:
+- **Download**: https://portfolio.hnezado.com/projects#hangTheWitch
 
 ## 🔗 Contact Me
 

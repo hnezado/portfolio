@@ -5,7 +5,7 @@ const cors = require("cors");
 const path = require("path");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
-const configPromise = require("./config_dev.js");
+const configPromise = require("./config.js");
 const AWS = require("aws-sdk");
 
 let config;

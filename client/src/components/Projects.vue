@@ -15,7 +15,6 @@
               v-if="projDownloadUrlIsString"
               :href="projDownloadUrl"
               class="link popup-link-download"
-              target="_blank"
               download
               >Download</a
             >
