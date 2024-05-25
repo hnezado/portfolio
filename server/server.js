@@ -5,7 +5,8 @@ const cors = require("cors");
 const path = require("path");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
-const configPromise = require("./config.js");
+// const configFn = require("./config_api");
+const configFn = require("./config_api_dev");
 const AWS = require("aws-sdk");
 
 let config;
@@ -15,7 +16,6 @@ AWS.config.update({ region: "eu-west-3" });
 const s3 = new AWS.S3();
 
 const app = express();
-const port = 3000;
 let server;
 
 // nodemailer
@@ -24,7 +24,6 @@ let transporter;
 app.use(express.json());
 app.use(express.static("client"));
 
-// DEV
 app.use(
   cors({
     origin: "*",
@@ -105,9 +104,9 @@ app.get("*", (req, res) => {
   res.send({ msg: msg });
 });
 
-async function initialize() {
+const initialize = async () => {
   try {
-    config = await configPromise;
+    config = await configFn.getConfig();
     config.email.recipients = config.email.recipients.split(",");
     app.use(cors(config.cors));
 
@@ -130,12 +129,12 @@ async function initialize() {
 
     server = https.createServer(httpsOptions, app);
 
-    server.listen(port, () => {
-      console.log(`Listening on port ${port}`);
+    server.listen(config.port, () => {
+      console.log(`Listening on port ${config.port}`);
     });
   } catch (err) {
     console.error("Error initializing server.\n", err);
   }
-}
+};
 
 initialize();

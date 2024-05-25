@@ -201,10 +201,13 @@
 .carousel-btn-enabled {
   cursor: pointer;
   opacity: 1;
+  /* box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1); */
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
 .carousel-btn-enabled:hover {
   background-color: var(--champagne-pink);
   color: var(--spruce);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0);
 }
 
 .carousel {

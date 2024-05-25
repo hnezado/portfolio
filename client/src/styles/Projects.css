@@ -202,7 +202,7 @@
 .btn-index {
   position: fixed;
   display: flex;
-  /* bottom: -35px; */
+  bottom: -35px;
   right: 30px;
   padding: 8px;
   text-decoration: none;

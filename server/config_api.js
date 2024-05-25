@@ -4,7 +4,7 @@ const AWS = require("aws-sdk");
 AWS.config.update({ region: "eu-west-3" });
 const ssm = new AWS.SSM();
 
-async function getParam(param) {
+const getParam = async (param) => {
   try {
     const data = await ssm
       .getParameter({ Name: param, WithDecryption: false })
@@ -15,28 +15,37 @@ async function getParam(param) {
     console.error("Error obtaining parameter value", err);
     throw err;
   }
-}
+};
 
-async function getConfig() {
+const getConfig = async () => {
   const email = {
     credentials: {
       service: "gmail",
       auth: {
-        user: await getParam("PORTFOLIO_EMAIL_FROM"),
-        pass: await getParam("PORTFOLIO_EMAIL_APP_PASS"),
+        user: null,
+        pass: null,
       },
       logger: true,
     },
-    sender: await getParam("PORTFOLIO_EMAIL_FROM"),
-    recipients: await getParam("PORTFOLIO_EMAIL_TO"),
+    sender: null,
+    recipients: null,
   };
+  email.credentials.auth.user = await getParam("PORTFOLIO_EMAIL_FROM");
+  email.credentials.auth.pass = await getParam("PORTFOLIO_EMAIL_APP_PASS");
+  email.sender = await getParam("PORTFOLIO_EMAIL_FROM");
+  email.recipients = await getParam("PORTFOLIO_EMAIL_TO");
 
   const httpsServer = {
-    certificate: await getParam("PORTFOLIO_CERTIFICATE_PATH"),
-    privateKey: await getParam("PORTFOLIO_PRIVATE_KEY"),
+    certificate: null,
+    privateKey: null,
   };
+  httpsServer.certificate = await getParam("PORTFOLIO_CERTIFICATE_PATH");
+  httpsServer.privateKey = await getParam("PORTFOLIO_PRIVATE_KEY");
+
+  const bucketName = await getParam("PORTFOLIO_APPS_BUCKET_NAME");
 
   return {
+    port: 3100,
     cors: {
       origin: "*",
       methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
@@ -45,8 +54,8 @@ async function getConfig() {
     },
     email,
     httpsServer,
-    bucketName: await getParam("PORTFOLIO_APPS_BUCKET_NAME"),
+    bucketName,
   };
-}
+};
 
-module.exports = getConfig();
+module.exports = { getConfig };
