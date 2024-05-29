@@ -20,7 +20,7 @@
     {
         "name": "setorium",
         "fullName": "Setorium",
-        "description": "Setorium is a simple web application designed to identify mushrooms from photos using a machine learning model. Users receive the probability of an accurate identification along with detailed characteristics of the most likely mushroom species. If accessed on a mobile device, the app allows direct camera access. Otherwise, users can drag and drop or manually upload images.<br><br>The application was developed as the final project of a Data Science Bootcamp by an outstanding team of three, including myself. The core data processing is powered entirely by <b>Python</b>, and the web application is built with <b>Flask</b>.",
+        "description": "Setorium is a simple web application designed to identify mushrooms from photos using a machine learning model. Users receive the probability of an accurate identification along with detailed characteristics of the most likely mushroom species. If accessed on a mobile device, the app allows direct camera access. Otherwise, users can drag and drop or manually upload images.<br><br>The application was developed as the final project of a Data Science Bootcamp by an outstanding team of three, including myself. The Web Scrapping to obtain images for training and testing the AI model was performed using <b>Selenium</b>. The core data processing is powered entirely by <b>Python</b>, and the web application is built with <b>Flask</b>.",
         "url": "https://setorium.hnezado.com",
         "github": "https://github.com/Setorium",
         "imgsQty": 0,
