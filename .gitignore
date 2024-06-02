@@ -1,6 +1,6 @@
 client/node_modules
 client/dist
-client/localhost-key.pem
+server/localhost-key.pem
 server/node_modules
 server/app
 server/.env
