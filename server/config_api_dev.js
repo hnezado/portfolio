@@ -36,8 +36,8 @@ const getConfig = async () => {
   email.recipients = await getParam("PORTFOLIO_EMAIL_TO");
 
   const httpsServer = {
-    certificate: "C:/Users/Jekthor/Documents/https/hnezado.com/fullchain1.pem",
-    privateKey: "C:/Users/Jekthor/Documents/https/hnezado.com/privkey1.pem",
+    certificate: "./localhost.pem",
+    privateKey: "./localhost-key.pem",
   };
 
   const bucketName = await getParam("PORTFOLIO_APPS_BUCKET_NAME");

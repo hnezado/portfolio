@@ -139,7 +139,6 @@
         />
       </div>
       <div><br /></div>
-      <!-- <a href="#" class="link projs-index-btn">▲ Go to index ▲</a> -->
     </section>
   </div>
 </template>
@@ -167,7 +166,6 @@ export default {
     this.updateRoute(this.$route.path);
     await this.fetchProjects();
     await this.checkDownloadable();
-    // await this.getImgPaths();
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.checkScrollPos);
@@ -231,7 +229,6 @@ export default {
 
         if (Array.isArray(parsedProjects) && parsedProjects.length > 0) {
           this.projects = parsedProjects;
-          console.log("projects:", this.projects);
         }
       } catch (error) {
         console.error("Error fetching projects", error);
@@ -247,17 +244,6 @@ export default {
         this.projects[i]["downloadable"] = downloadable;
       }
     },
-    // async getImgPaths() {
-    //   for (let i = 0; i < this.projects.length; i++) {
-    //     const proj = this.projects[i];
-    //     const paths = [];
-    //     for (let j = 0; j < proj.imgsQty; j++) {
-    //       const imgPath = `data/projects/${proj.name}/img_${j + 1}.gif`;
-    //       paths.push(imgPath);
-    //     }
-    //     this.projects[i]["imgsPaths"] = paths;
-    //   }
-    // },
     checkScrollPos() {
       this.isIndexBtnShown = window.scrollY !== 0;
     },

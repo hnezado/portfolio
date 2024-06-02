@@ -5,7 +5,6 @@
         "description": "",
         "url": "https://eco-brico.hnezado.com",
         "github": "https://github.com/hnezado/eco-brico",
-        "imgsQty": 0,
         "technologies": []
     },
     {
@@ -14,7 +13,6 @@
         "description": "",
         "url": "",
         "github": "https://github.com/hnezado/secret_santa",
-        "imgsQty": 0,
         "technologies": []
     },
     {
@@ -23,7 +21,6 @@
         "description": "Setorium is a simple web application designed to identify mushrooms from photos using a machine learning model. Users receive the probability of an accurate identification along with detailed characteristics of the most likely mushroom species. If accessed on a mobile device, the app allows direct camera access. Otherwise, users can drag and drop or manually upload images.<br><br>The application was developed as the final project of a Data Science Bootcamp by an outstanding team of three, including myself. The Web Scrapping to obtain images for training and testing the AI model was performed using <b>Selenium</b>. The core data processing is powered entirely by <b>Python</b>, and the web application is built with <b>Flask</b>.",
         "url": "https://setorium.hnezado.com",
         "github": "https://github.com/Setorium",
-        "imgsQty": 0,
         "technologies": [
             "Python",
             "Flask"
@@ -35,7 +32,6 @@
         "description": "Applant is a comprehensive web application featuring a botanical insights blog and a plant e-store. Users can filter plants by several criteria and add desired items to their cart, with a functional payment system integrated with Stripe. User roles include a seller (administrator) with blog and stock management privileges and a customer with shopping cart, favorite products and blog posts likes options.<br><br>The Frontend was developed mainly through <b>React</b> and the Backend using <b>MongoDB (Mongoose)</b>, <b>Node.js (Express)</b> and <b>Stripe</b>. This project showcases the culmination of a Full-Stack Web Development Bootcamp, completed by a wonderful team of three in just over a week.",
         "url": "https://applant.hnezado.com",
         "github": "https://github.com/hnezado/applant",
-        "imgsQty": 10,
         "technologies": [
             "Mongo DB",
             "Express",
@@ -52,7 +48,6 @@
         "description": "Alloy Me App is an interactive chemistry learning web app designed to engage users in exploring chemical elements and alloys specifically. Users can create accounts to access personalized study materials and quizzes, enhancing their knowledge and understanding of chemistry concepts. In addition, admin users have privileges to manage users, alloys, and quizzes.<br><br>Developed primarily in <b>JavaScript</b>, <b>HTML</b>, <b>CSS (Sass)</b>, <b>NodeJS (Express)</b> and <b>MongoDB (Mongoose)</b> using <b>Handlebars</b> to render the views, as the final project for the Backend module of a Full-Stack Web Development Bootcamp.",
         "url": "https://alloy-me-app.hnezado.com",
         "github": "https://github.com/hnezado/AlloyMeApp",
-        "imgsQty": 5,
         "technologies": [
             "JavaScript",
             "HTML",
@@ -75,7 +70,6 @@
         "description": "To Eat or Not To Eat is a survival game where players must manage their hunger and thirst to survive in a forest environment. Players have to search for food and water, and avoid hazards to stay alive. The game features a dynamic hunger and thirst system, mechanics for cooking food, and environmental dangers that players must avoid.<br><br>Developed primarily in <b>JavaScript</b>, <b>HTML</b> and <b>CSS</b> as the final project for the Frontend module of a Full-Stack Web Development Bootcamp.",
         "url": "https://to-eat-or-not-to-eat.hnezado.com",
         "github": "https://github.com/hnezado/ToEatOrNotToEat",
-        "imgsQty": 5,
         "technologies": [
             "JavaScript",
             "HTML",
@@ -91,7 +85,6 @@
         "description": "Hang The Witch is a hangman-style game where players try to guess letters in a hidden word to save a witch from being hanged. The game features a difficulty select screen and an in-game menu that allows to mute sound/music among other options.<br><br>Developed mainly in <b>Python</b> using <b>Pygame</b> and <b>Random-words</b> for word generation.<br><br><em style=\"font-size: 0.7rem;\">*Note: All images and models were created by me using Photoshop and Blender.</em>",
         "url": "",
         "github": "https://github.com/hnezado/HangTheWitch",
-        "imgsQty": 5,
         "technologies": [
             "Python",
             "Pygame",

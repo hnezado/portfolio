@@ -22,7 +22,7 @@ let server;
 let transporter;
 
 app.use(express.json());
-app.use(express.static("client"));
+app.use(express.static("data"));
 
 app.use(
   cors({
@@ -33,11 +33,29 @@ app.use(
   })
 );
 
-app.get("/skills", (req, res) => {
+app.get("/profile-picture", (_, res) => {
   try {
-    const data = fs.readFileSync(path.join(__dirname, "data", "skills.json"));
-    const skills = JSON.parse(data);
-    res.json(skills);
+    res.sendFile(path.join(__dirname, "data", "profile_picture.webp"));
+  } catch (err) {
+    const msg = "Error reading cv pdf";
+    console.error(msg, err);
+    res.status(500).send({ msg: msg, err: err });
+  }
+});
+
+app.get("/cv", (_, res) => {
+  try {
+    res.sendFile(path.join(__dirname, "data", "cv_hector_martinez.pdf"));
+  } catch (err) {
+    const msg = "Error reading cv pdf";
+    console.error(msg, err);
+    res.status(500).send({ msg: msg, err: err });
+  }
+});
+
+app.get("/skills", (_, res) => {
+  try {
+    res.sendFile(path.join(__dirname, "data", "skills.json"));
   } catch (err) {
     const msg = "Error reading file";
     console.error(msg, err);
@@ -45,13 +63,92 @@ app.get("/skills", (req, res) => {
   }
 });
 
-app.get("/projects", (req, res) => {
+app.get("/logo/:_name", (req, res) => {
   try {
-    const data = fs.readFileSync(path.join(__dirname, "data", "projects.json"));
-    const projects = JSON.parse(data);
+    const logoName = req.params._name;
+    const logoPath = path.join(
+      __dirname,
+      "data",
+      "images",
+      "logos",
+      `${logoName}.svg`
+    );
+    res.sendFile(logoPath);
+  } catch (err) {
+    const msg = `Error reading logo`;
+    console.error(msg, err);
+    res.status(500).send({ msg, err });
+  }
+});
+
+app.get("/projects", (_, res) => {
+  try {
+    const projectsFilePath = path.join(__dirname, "data", "projects.json");
+    let projects = JSON.parse(fs.readFileSync(projectsFilePath));
+
+    projects.forEach((project) => {
+      const projectImagesPath = path.join(
+        __dirname,
+        "data",
+        "images",
+        "projects",
+        project.name
+      );
+      if (fs.existsSync(projectImagesPath)) {
+        project.numImages = fs
+          .readdirSync(projectImagesPath)
+          .filter((file) => file.endsWith(".gif")).length;
+      } else {
+        project.numImages = 0;
+      }
+    });
+
     res.json(projects);
   } catch (err) {
     const msg = "Error reading projects file";
+    console.error(msg, err);
+    res.status(500).send({ msg: msg, err: err });
+  }
+});
+
+app.get("/proj-icon/:_proj", (req, res) => {
+  try {
+    const proj = req.params._proj;
+    if (!proj) {
+      const msg = `Missing project parameter`;
+      return res.status(400).send({ msg });
+    }
+    const iconPath = path.join(
+      __dirname,
+      "data",
+      "images",
+      "projects",
+      proj,
+      "icon.png"
+    );
+    if (fs.existsSync(iconPath)) {
+      res.sendFile(iconPath);
+    } else {
+      res.status(404).send({ msg: "Icon not found" });
+    }
+  } catch (err) {
+    const msg = "Error reading project icon";
+    console.error(msg, err);
+    res.status(500).send({ msg: msg, err: err });
+  }
+});
+
+app.get("/proj-img", (req, res) => {
+  try {
+    const proj = req.query.proj;
+    const img = req.query.img;
+    if (!proj || !img) {
+      const msg = `Missing project or image parameter in query`;
+      return res.status(400).send({ msg });
+    }
+    res.sendFile(path.join(__dirname, "data", "images", "projects", proj, img));
+  } catch (err) {
+    const msg = "Error reading project image";
     console.error(msg, err);
     res.status(500).send({ msg: msg, err: err });
   }
@@ -99,7 +196,7 @@ app.post("/send-email", async (req, res) => {
   }
 });
 
-app.get("*", (req, res) => {
+app.get("*", (_, res) => {
   const msg = "Path not defined";
   res.send({ msg: msg });
 });
@@ -112,7 +209,7 @@ const initialize = async () => {
 
     // Nodemailer Configuration
     transporter = nodemailer.createTransport(config.email.credentials);
-    transporter.verify(function (error, success) {
+    transporter.verify(function (error, _) {
       if (error) {
         console.log("Server is not ready to receive messages");
         console.log(error);
