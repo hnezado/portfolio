@@ -1,6 +1,6 @@
 <template>
   <div class="bg">
-    <img class="waves" src="data/waves_bg.svg" alt="waves_bg" />
+    <img class="waves" :src="require('@/assets/waves_bg.svg')" alt="waves_bg" />
   </div>
 </template>
 

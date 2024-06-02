@@ -71,14 +71,17 @@
     </div>
     <div class="projs-index">
       <div class="projs-title">
-        <img src="data/projects/projects-drawing.png" alt="projects-drawing" />
+        <img
+          :src="require('@/assets/projects_drawing.png')"
+          alt="projects_drawing"
+        />
         <h1>My Projects</h1>
       </div>
       <ul class="projs-list">
         <li v-for="(proj, index) in projects" :key="index">
           <a :href="'#' + proj.name" class="link proj-card">
             <img
-              :src="`data/projects/${proj.name}/icon.png`"
+              :src="`${proj.iconUrl}`"
               :alt="`${proj.name}_icon`"
               class="proj-icon"
             />
@@ -96,7 +99,7 @@
       <h2>{{ proj.fullName }}</h2>
       <img
         v-if="proj.description.length <= 0"
-        src="data/projects/wip.png"
+        :src="require('@/assets/wip.png')"
         alt="Work In Progress"
         class="proj-wip"
       />
@@ -164,7 +167,7 @@ export default {
     this.updateRoute(this.$route.path);
     await this.fetchProjects();
     await this.checkDownloadable();
-    await this.getImgPaths();
+    // await this.getImgPaths();
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.checkScrollPos);
@@ -190,11 +193,45 @@ export default {
     async fetchProjects() {
       try {
         const res = await fetch(`${this.$config.serverUrl}/projects`);
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          if (data.length > 0) {
-            this.projects = data;
-          }
+        const rawProjects = await res.json();
+
+        const projectsWithIcons = await Promise.all(
+          rawProjects.map(async (proj) => {
+            console.log();
+            const iconRes = await fetch(
+              `${this.$config.serverUrl}/proj-icon/${proj.name}`
+            );
+            if (iconRes.ok) {
+              const iconBlob = await iconRes.blob();
+              proj.iconUrl = URL.createObjectURL(iconBlob);
+            } else {
+              proj.iconUrl = null;
+            }
+            return proj;
+          })
+        );
+
+        const parsedProjects = await Promise.all(
+          projectsWithIcons.map(async (proj) => {
+            const imagePromises = [];
+            for (let i = 1; i <= proj.numImages; i++) {
+              const imageRes = await fetch(
+                `${this.$config.serverUrl}/proj-img?proj=${proj.name}&img=img_${i}.gif`
+              );
+              if (imageRes.ok) {
+                const imageBlob = await imageRes.blob();
+                const imageUrl = URL.createObjectURL(imageBlob);
+                imagePromises.push(imageUrl);
+              }
+            }
+            proj.imgsPaths = await Promise.all(imagePromises);
+            return proj;
+          })
+        );
+
+        if (Array.isArray(parsedProjects) && parsedProjects.length > 0) {
+          this.projects = parsedProjects;
+          console.log("projects:", this.projects);
         }
       } catch (error) {
         console.error("Error fetching projects", error);
@@ -210,17 +247,17 @@ export default {
         this.projects[i]["downloadable"] = downloadable;
       }
     },
-    async getImgPaths() {
-      for (let i = 0; i < this.projects.length; i++) {
-        const proj = this.projects[i];
-        const paths = [];
-        for (let j = 0; j < proj.imgsQty; j++) {
-          const imgPath = `data/projects/${proj.name}/img_${j + 1}.gif`;
-          paths.push(imgPath);
-        }
-        this.projects[i]["imgsPaths"] = paths;
-      }
-    },
+    // async getImgPaths() {
+    //   for (let i = 0; i < this.projects.length; i++) {
+    //     const proj = this.projects[i];
+    //     const paths = [];
+    //     for (let j = 0; j < proj.imgsQty; j++) {
+    //       const imgPath = `data/projects/${proj.name}/img_${j + 1}.gif`;
+    //       paths.push(imgPath);
+    //     }
+    //     this.projects[i]["imgsPaths"] = paths;
+    //   }
+    // },
     checkScrollPos() {
       this.isIndexBtnShown = window.scrollY !== 0;
     },

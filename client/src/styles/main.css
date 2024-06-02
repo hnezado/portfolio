@@ -22,6 +22,11 @@ html {
   }
 }
 
+::selection {
+  background-color: var(--timberwolf); /* Cambia el color de fondo */
+  color: var(--isabelline); /* Cambia el color del texto */
+}
+
 #app {
   position: relative;
   font-family: "Rubik", Helvetica, Arial, sans-serif;

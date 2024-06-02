@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="welcome_waves">
-        <img src="data/waves_mid.svg" alt="waves_welcome" />
+        <img :src="require('@/assets/waves_mid.svg')" alt="waves_welcome" />
         <a href="#about" class="arrow">↓</a>
       </div>
     </section>
@@ -26,11 +26,7 @@
         <h2>About me</h2>
         <div class="profile-container">
           <div class="profile">
-            <img
-              class="profile-img"
-              src="data/profile_photo.webp"
-              alt="profile_photo"
-            />
+            <img class="profile-img" :src="profilePic" alt="profile_photo" />
             <div class="profile-details">
               <p
                 :class="{ 'text-animation': animStart.profileDetails }"
@@ -86,7 +82,7 @@
               >
                 <li v-for="(skill, index) in skills" :key="index">
                   <img
-                    :src="`data/logos/${skill.name}.svg`"
+                    :src="logos[skill.name]"
                     :alt="`logo_${skill.name}`"
                   /><span>{{ skill.fullName }}</span>
                 </li>
@@ -119,7 +115,9 @@ export default {
   data() {
     return {
       smallScreen: false,
+      profilePic: "",
       skills: [],
+      logos: {},
       elementsToObserve: [
         ["profileDetails", 0.1],
         ["profileContactTitle", 0.1],
@@ -131,9 +129,11 @@ export default {
     };
   },
   mixins: [mixin],
-  mounted() {
+  async mounted() {
     this.updateRoute(this.$route.path);
-    this.fetchSkills();
+    await this.fetchPicture();
+    await this.fetchSkills();
+    await this.fetchLogos();
     this.elementsToObserve.forEach((args) => this.observeElement(...args));
   },
   methods: {
@@ -151,6 +151,30 @@ export default {
         }
       } catch (error) {
         console.error("Error fetching skills", error);
+      }
+    },
+    async fetchLogos() {
+      this.skills.forEach(async (skill) => {
+        try {
+          const res = await fetch(
+            `${this.$config.serverUrl}/logo/${skill.name}`
+          );
+          const blob = await res.blob();
+          this.logos[skill.name] = URL.createObjectURL(blob);
+        } catch (err) {
+          const msg = `Error fetching logos`;
+          console.error(msg);
+        }
+      });
+    },
+    async fetchPicture() {
+      try {
+        const res = await fetch(`${this.$config.serverUrl}/profile-picture`);
+        const blob = await res.blob();
+        this.profilePic = URL.createObjectURL(blob);
+      } catch (err) {
+        const msg = `Error fetching picture`;
+        console.error(msg, err);
       }
     },
     getCarouselSpeed() {

@@ -1,6 +1,10 @@
 <template>
   <footer class="footer">
-    <img src="data/waves_bot.svg" alt="waves_bot" class="footer-waves" />
+    <img
+      :src="require('@/assets/waves_bot.svg')"
+      alt="waves_bot"
+      class="footer-waves"
+    />
     <div class="footer-bar">
       <a
         class="icon"
