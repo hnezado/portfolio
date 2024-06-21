@@ -98,7 +98,7 @@
     >
       <h2>{{ proj.fullName }}</h2>
       <img
-        v-if="proj.description.length <= 0"
+        v-if="proj.description.length <= 0 || !proj.imgsPaths.length"
         :src="require('@/assets/wip.png')"
         alt="Work In Progress"
         class="proj-wip"
