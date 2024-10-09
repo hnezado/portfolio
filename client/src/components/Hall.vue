@@ -26,7 +26,11 @@
         <h2>About me</h2>
         <div class="profile-container">
           <div class="profile">
-            <img class="profile-img" :src="profilePic" alt="profile_photo" />
+            <img
+              class="profile-img"
+              :src="profilePicture"
+              alt="profile_photo"
+            />
             <div class="profile-details">
               <p
                 :class="{ 'text-animation': animStart.profileDetails }"
@@ -37,18 +41,9 @@
                 proactive solutions to the table for our digital projects.
                 <br /><br />If you wish to know more, I invite you to check out
                 my
-                <a
-                  class="link-light"
-                  target="_blank"
-                  href="data/cv_hector_martinez.pdf"
+                <a class="link-light profile-cv" target="_blank" :href="cv"
                   >CV</a
-                >
-                (<a
-                  class="link-light"
-                  href="data/cv_hector_martinez.pdf"
-                  download
-                  >download</a
-                >).
+                >.
               </p>
               <div class="profile-contact" ref="profileContactTitle">
                 <h4
@@ -82,7 +77,7 @@
               >
                 <li v-for="(skill, index) in skills" :key="index">
                   <img
-                    :src="logos[skill.name]"
+                    :src="skillsLogos[skill.name]"
                     :alt="`logo_${skill.name}`"
                   /><span>{{ skill.fullName }}</span>
                 </li>
@@ -114,10 +109,11 @@ export default {
   name: "HallComponent",
   data() {
     return {
-      smallScreen: false,
-      profilePic: "",
+      pathsConfig: null,
+      profilePicture: "",
+      cv: null,
       skills: [],
-      logos: {},
+      skillsLogos: {},
       elementsToObserve: [
         ["profileDetails", 0.1],
         ["profileContactTitle", 0.1],
@@ -131,51 +127,69 @@ export default {
   mixins: [mixin],
   async mounted() {
     this.updateRoute(this.$route.path);
-    await this.fetchPicture();
-    await this.fetchSkills();
-    await this.fetchLogos();
+    await this.fetchPathsConfig();
+    await this.fetchProfilePicture();
+    await this.fetchCV();
+    await this.fetchSkillsConfig();
+    await this.fetchSkillsLogos();
     this.elementsToObserve.forEach((args) => this.observeElement(...args));
   },
   methods: {
-    async fetchSkills() {
+    async fetchPathsConfig() {
       try {
-        const res = await fetch(`${this.$config.serverUrl}/skills`, {
-          method: "GET",
-          mode: "cors",
-        });
-        const data = await res.json();
+        const apiUrl = `${process.env.VUE_APP_API_URL}/config/paths`;
+        const response = await fetch(apiUrl);
+        this.pathsConfig = await response.json();
+      } catch (error) {
+        const msg = "Error fetching paths config";
+        console.error(msg, error);
+      }
+    },
+    async fetchProfilePicture() {
+      try {
+        const apiUrl = `${this.pathsConfig.baseURL}${this.pathsConfig.assets.profilePicture}`;
+        this.profilePicture = apiUrl;
+      } catch (error) {
+        const msg = "Error fetching picture";
+        console.error(msg, error);
+      }
+    },
+    async fetchCV() {
+      try {
+        const apiUrl = `${this.pathsConfig.baseURL}${this.pathsConfig.assets.cv}`;
+        this.cv = apiUrl;
+      } catch (error) {
+        const msg = "Error fetching CV";
+        console.error(msg, error);
+      }
+    },
+    async fetchSkillsConfig() {
+      try {
+        const apiUrl = `${process.env.VUE_APP_API_URL}/config/skills`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
         if (Array.isArray(data)) {
           if (data.length > 0) {
             this.skills = data;
           }
         }
       } catch (error) {
-        console.error("Error fetching skills", error);
+        const msg = "Error fetching skills config";
+        console.error(msg, error);
       }
     },
-    async fetchLogos() {
+    async fetchSkillsLogos() {
       this.skills.forEach(async (skill) => {
         try {
-          const res = await fetch(
-            `${this.$config.serverUrl}/logo/${skill.name}`
-          );
-          const blob = await res.blob();
-          this.logos[skill.name] = URL.createObjectURL(blob);
+          const apiUrl = `${this.pathsConfig.baseURL}${this.pathsConfig.skills.basePath}${skill.name}${this.pathsConfig.skills.logoFormat}`;
+          const response = await fetch(apiUrl);
+          const blob = await response.blob();
+          this.skillsLogos[skill.name] = URL.createObjectURL(blob);
         } catch (err) {
-          const msg = `Error fetching logos`;
+          const msg = "Error fetching skills logos";
           console.error(msg);
         }
       });
-    },
-    async fetchPicture() {
-      try {
-        const res = await fetch(`${this.$config.serverUrl}/profile-picture`);
-        const blob = await res.blob();
-        this.profilePic = URL.createObjectURL(blob);
-      } catch (err) {
-        const msg = `Error fetching picture`;
-        console.error(msg, err);
-      }
     },
     getCarouselSpeed() {
       const width = window.innerWidth;

@@ -1,8 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import { createRouter, createWebHistory } from "vue-router";
-// import config from "./config.json";
-import config from "./config_dev.json";
+// import pathsConfig from "./config.json";
 
 import HallPage from "./components/Hall.vue";
 import ProjectsPage from "./components/Projects.vue";
@@ -18,5 +17,4 @@ const router = createRouter({
 });
 
 const app = createApp(App);
-app.config.globalProperties.$config = config;
 app.use(router).mount("#app");

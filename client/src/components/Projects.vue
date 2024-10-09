@@ -12,8 +12,8 @@
           <li>
             Click to
             <a
-              v-if="projDownloadUrlIsString"
-              :href="projDownloadUrl"
+              v-if="appDownloadUrlIsString"
+              :href="appDownloadUrl"
               class="link popup-link-download"
               download
               >Download</a
@@ -43,8 +43,12 @@
       <div @click="closeCarousel" class="carousel-bg"></div>
       <div class="carousel carousel-proj">
         <img
-          :src="projects[carouselProjIndex].imgsPaths[carouselImgIndex]"
-          :alt="`img_${carouselImgIndex}`"
+          :src="
+            projects[carouselProjIndex].screenshotsPaths[
+              carouselScreenshotIndex
+            ]
+          "
+          :alt="`img_${carouselScreenshotIndex}`"
           class="carousel-img"
         />
         <span
@@ -55,7 +59,7 @@
         <span
           @click="prevImg"
           class="carousel-btn carousel-btn-proj carousel-prev"
-          :class="{ 'carousel-btn-enabled': carouselImgIndex !== 0 }"
+          :class="{ 'carousel-btn-enabled': carouselScreenshotIndex !== 0 }"
           >&lt;</span
         >
         <span
@@ -63,7 +67,8 @@
           class="carousel-btn carousel-btn-proj carousel-next"
           :class="{
             'carousel-btn-enabled':
-              carouselImgIndex < currentProjectCarousel.imgsPaths.length - 1,
+              carouselScreenshotIndex <
+              currentProjectCarousel.screenshotsPaths.length - 1,
           }"
           >&gt;</span
         >
@@ -72,20 +77,31 @@
     <div class="projs-index">
       <div class="projs-title">
         <img
-          :src="require('@/assets/projects_drawing.png')"
-          alt="projects_drawing"
+          :src="require('@/assets/projects_header.png')"
+          alt="projects_header"
         />
         <h1>My Projects</h1>
       </div>
       <ul class="projs-list">
         <li v-for="(proj, index) in projects" :key="index">
-          <a :href="'#' + proj.name" class="link proj-card">
+          <a
+            :href="'#' + proj.name"
+            :class="{
+              'link proj-card': true,
+              'proj-wip': isWorkInProgress(proj),
+            }"
+          >
             <img
-              :src="`${proj.iconUrl}`"
+              v-if="proj.iconPath"
+              :src="`${proj.iconPath}`"
               :alt="`${proj.name}_icon`"
               class="proj-icon"
             />
             {{ proj.fullName }}
+            <div v-if="isWorkInProgress(proj)" class="overlay-wip"></div>
+            <div v-if="isWorkInProgress(proj)" class="wip-message">
+              Currently under construction
+            </div>
           </a>
         </li>
       </ul>
@@ -98,10 +114,10 @@
     >
       <h2>{{ proj.fullName }}</h2>
       <img
-        v-if="proj.description.length <= 0 || !proj.imgsPaths.length"
+        v-if="isWorkInProgress(proj)"
         :src="require('@/assets/wip.png')"
         alt="Work In Progress"
-        class="proj-wip"
+        class="proj-wip-image"
       />
       <div class="techs">
         <h6>Development tools and technologies:</h6>
@@ -130,11 +146,11 @@
       </a>
       <div class="proj-img-container">
         <img
-          v-for="(imgPath, imgIndex) of proj.imgsPaths"
-          :key="imgIndex"
-          :src="imgPath"
-          :alt="`img_${imgIndex + 1}`"
-          @click="openCarousel(projIndex, imgIndex)"
+          v-for="(screenshotPath, screenshotIndex) of proj.screenshotsPaths"
+          :key="screenshotIndex"
+          :src="screenshotPath"
+          :alt="`img_${screenshotIndex + 1}`"
+          @click="openCarousel(projIndex, screenshotIndex)"
           class="proj-img"
         />
       </div>
@@ -146,25 +162,28 @@
 <script>
 import mixin from "@/mixin.js";
 import "@/styles/Projects.css";
-import axios from "axios";
 
 export default {
   name: "ProjectsComponent",
   data() {
     return {
+      pathsConfig: null,
       projects: [],
+      projectsIcons: [],
       isIndexBtnShown: false,
       popupProjIndex: null,
-      projDownloadUrl: null,
+      appDownloadUrl: null,
       carouselProjIndex: null,
-      carouselImgIndex: null,
+      carouselScreenshotIndex: null,
     };
   },
   mixins: [mixin],
   async mounted() {
     window.addEventListener("scroll", this.checkScrollPos);
     this.updateRoute(this.$route.path);
+    await this.fetchPathsConfig();
     await this.fetchProjects();
+    await this.generateProjectsImagesPaths();
     await this.checkDownloadable();
   },
   beforeUnmount() {
@@ -177,8 +196,8 @@ export default {
       }
       return null;
     },
-    projDownloadUrlIsString() {
-      return typeof this.projDownloadUrl === "string";
+    appDownloadUrlIsString() {
+      return typeof this.appDownloadUrl === "string";
     },
     currentProjectCarousel() {
       if (this.carouselProjIndex !== null) {
@@ -188,100 +207,133 @@ export default {
     },
   },
   methods: {
+    async fetchPathsConfig() {
+      try {
+        const apiUrl = `${process.env.VUE_APP_API_URL}/config/paths`;
+        const response = await fetch(apiUrl);
+        this.pathsConfig = await response.json();
+      } catch (error) {
+        const msg = "Error fetching paths config";
+        console.error(msg, error);
+      }
+    },
     async fetchProjects() {
       try {
-        const res = await fetch(`${this.$config.serverUrl}/projects`);
-        const rawProjects = await res.json();
-
-        const projectsWithIcons = await Promise.all(
-          rawProjects.map(async (proj) => {
-            console.log();
-            const iconRes = await fetch(
-              `${this.$config.serverUrl}/proj-icon/${proj.name}`
-            );
-            if (iconRes.ok) {
-              const iconBlob = await iconRes.blob();
-              proj.iconUrl = URL.createObjectURL(iconBlob);
-            } else {
-              proj.iconUrl = null;
-            }
-            return proj;
-          })
-        );
-
-        const parsedProjects = await Promise.all(
-          projectsWithIcons.map(async (proj) => {
-            const imagePromises = [];
-            for (let i = 1; i <= proj.numImages; i++) {
-              const imageRes = await fetch(
-                `${this.$config.serverUrl}/proj-img?proj=${proj.name}&img=img_${i}.gif`
-              );
-              if (imageRes.ok) {
-                const imageBlob = await imageRes.blob();
-                const imageUrl = URL.createObjectURL(imageBlob);
-                imagePromises.push(imageUrl);
-              }
-            }
-            proj.imgsPaths = await Promise.all(imagePromises);
-            return proj;
-          })
-        );
-
-        if (Array.isArray(parsedProjects) && parsedProjects.length > 0) {
-          this.projects = parsedProjects;
-        }
+        const apiUrl = `${process.env.VUE_APP_API_URL}/config/projects`;
+        const response = await fetch(apiUrl);
+        this.projects = await response.json();
       } catch (error) {
-        console.error("Error fetching projects", error);
+        const msg = "Error fetching paths config";
+        console.error(msg, error);
+      }
+    },
+    async generateProjectsImagesPaths() {
+      this.projects = await Promise.all(
+        this.projects.map(async (proj) => {
+          const editedProject = proj;
+          const projectImages = await this.retrieveProjectImages(proj.name);
+          const { defaultScreenshotName, imageFormat } =
+            this.pathsConfig.projects;
+          const regex = new RegExp(
+            `.*${defaultScreenshotName}\\d+${imageFormat}$`,
+            "i"
+          );
+
+          editedProject["iconPath"] = `${
+            this.pathsConfig.baseURL
+          }${projectImages.objects.filter((obj) => obj.includes("/icon."))}`;
+
+          editedProject["screenshotsPaths"] = projectImages.objects
+            .filter((obj) => regex.test(obj))
+            .map((obj) => `${this.pathsConfig.baseURL}${obj}`)
+            .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+
+          return editedProject;
+        })
+      );
+    },
+    async retrieveProjectImages(projectName) {
+      try {
+        const apiUrl = `${process.env.VUE_APP_API_URL}/retrieve-project-images`;
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ projectName }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Error retrieving project images");
+        }
+
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Error:", error.message);
       }
     },
     async checkDownloadable() {
-      for (let i = 0; i < this.projects.length; i++) {
-        const proj = this.projects[i];
-        let downloadable = false;
-        if (proj.url.length === 0) {
-          downloadable = true;
-        }
-        this.projects[i]["downloadable"] = downloadable;
-      }
+      this.projects.forEach((proj) => {
+        proj.downloadable = !proj.url.length;
+      });
+    },
+    isWorkInProgress(proj) {
+      return (
+        (proj.description && !proj.description.length) ||
+        !proj.screenshotsPaths ||
+        (proj.screenshotsPaths && !proj.screenshotsPaths.length)
+      );
     },
     checkScrollPos() {
       this.isIndexBtnShown = window.scrollY !== 0;
     },
-    async getProjUrl() {
-      const res = await axios.post(`${this.$config.serverUrl}/download-url`, {
-        fileName: `${this.currentProjectPopup.name}.zip`,
-      });
-      this.projDownloadUrl = res.data.downloadUrl;
+    async getAppUrl() {
+      try {
+        const res = await fetch(`${process.env.VUE_APP_API_URL}/download`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fileName: `${this.currentProjectPopup.name}`,
+          }),
+        });
+        const data = await res.json();
+        this.appDownloadUrl = data.downloadUrl;
+      } catch (error) {
+        console.error("Error fetching app URL:", error);
+      }
     },
     openPopup(popupProjIndex) {
       this.popupProjIndex = popupProjIndex;
-      this.getProjUrl();
+      this.getAppUrl();
     },
     closePopup() {
       this.popupProjIndex = null;
-      this.projDownloadUrl = null;
+      this.appDownloadUrl = null;
     },
-    openCarousel(carouselProjIndex, carouselImgIndex) {
+    openCarousel(carouselProjIndex, carouselScreenshotIndex) {
       this.carouselProjIndex = carouselProjIndex;
-      this.carouselImgIndex = carouselImgIndex;
+      this.carouselScreenshotIndex = carouselScreenshotIndex;
     },
     closeCarousel() {
       this.carouselProjIndex = null;
-      this.carouselImgIndex = null;
+      this.carouselScreenshotIndex = null;
     },
     prevImg() {
       const minIndex = 0;
-      this.carouselImgIndex--;
-      if (this.carouselImgIndex < minIndex) {
-        this.carouselImgIndex = minIndex;
+      this.carouselScreenshotIndex--;
+      if (this.carouselScreenshotIndex < minIndex) {
+        this.carouselScreenshotIndex = minIndex;
       }
     },
     nextImg() {
       const maxIndex =
-        this.projects[this.carouselProjIndex].imgsPaths.length - 1;
-      this.carouselImgIndex++;
-      if (this.carouselImgIndex > maxIndex) {
-        this.carouselImgIndex = maxIndex;
+        this.projects[this.carouselProjIndex].screenshotsPaths.length - 1;
+      this.carouselScreenshotIndex++;
+      if (this.carouselScreenshotIndex > maxIndex) {
+        this.carouselScreenshotIndex = maxIndex;
       }
     },
   },

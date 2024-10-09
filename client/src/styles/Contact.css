@@ -64,6 +64,16 @@
   }
 }
 
+.email-response-msg {
+  font-size: 1.2rem;
+  .success {
+    color: green;
+  }
+  .fail {
+    color: red;
+  }
+}
+
 @media only screen and (max-width: 600px) {
   .contact-form {
     > label {

@@ -169,6 +169,10 @@
   }
 }
 
+.profile-cv {
+  animation: cvColorBeat 1.5s infinite;
+}
+
 .skills-container {
   display: flex;
   flex-direction: column;
@@ -307,6 +311,18 @@
   }
   75% {
     transform: translateY(3px);
+  }
+}
+
+@keyframes cvColorBeat {
+  0% {
+    color: var(--pale-dogwood);
+  }
+  50% {
+    color: var(--isabelline);
+  }
+  100% {
+    color: var(--pale-dogwood);
   }
 }
 
