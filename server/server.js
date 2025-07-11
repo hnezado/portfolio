@@ -1,19 +1,14 @@
 const express = require("express");
 const https = require("https");
 const fs = require("fs");
+const fsPromises = require("fs/promises");
 const cors = require("cors");
 const path = require("path");
 const nodemailer = require("nodemailer");
-require("dotenv").config();
-// const configFn = require("./config_api");
-const configFn = require("./config_api_dev");
-const AWS = require("aws-sdk");
+require('dotenv').config({ path: path.join(__dirname, '.env') });
+const configFn = require("./config/default");
 
 let config;
-
-// AWS Configuration
-AWS.config.update({ region: "eu-west-3" });
-const s3 = new AWS.S3();
 
 const app = express();
 let server;
@@ -33,7 +28,7 @@ app.use(
   })
 );
 
-app.get("/profile-picture", (_, res) => {
+app.get("/api/profile-picture", (_, res) => {
   try {
     res.sendFile(path.join(__dirname, "data", "profile_picture.webp"));
   } catch (err) {
@@ -43,7 +38,7 @@ app.get("/profile-picture", (_, res) => {
   }
 });
 
-app.get("/cv", (_, res) => {
+app.get("/api/cv", (_, res) => {
   try {
     res.sendFile(path.join(__dirname, "data", "cv_hector_martinez.pdf"));
   } catch (err) {
@@ -53,7 +48,7 @@ app.get("/cv", (_, res) => {
   }
 });
 
-app.get("/skills", (_, res) => {
+app.get("/api/skills", (_, res) => {
   try {
     res.sendFile(path.join(__dirname, "data", "skills.json"));
   } catch (err) {
@@ -63,7 +58,7 @@ app.get("/skills", (_, res) => {
   }
 });
 
-app.get("/logo/:_name", (req, res) => {
+app.get("/api/logo/:_name", (req, res) => {
   try {
     const logoName = req.params._name;
     const logoPath = path.join(
@@ -81,7 +76,7 @@ app.get("/logo/:_name", (req, res) => {
   }
 });
 
-app.get("/projects", (_, res) => {
+app.get("/api/projects", (_, res) => {
   try {
     const projectsFilePath = path.join(__dirname, "data", "projects.json");
     let projects = JSON.parse(fs.readFileSync(projectsFilePath));
@@ -94,12 +89,20 @@ app.get("/projects", (_, res) => {
         "projects",
         project.name
       );
+
       if (fs.existsSync(projectImagesPath)) {
         project.numImages = fs
           .readdirSync(projectImagesPath)
           .filter((file) => file.endsWith(".gif")).length;
       } else {
         project.numImages = 0;
+      }
+
+      if (project.app && project.app.type === 'download') {
+        const filePath = path.join(config.downloadsFolder, `${project.name}.zip`);
+        if (fs.existsSync(filePath)) {
+          project.app.fileRoute = `/downloads/${project.name}.zip`;
+        }
       }
     });
 
@@ -111,7 +114,7 @@ app.get("/projects", (_, res) => {
   }
 });
 
-app.get("/proj-icon/:_proj", (req, res) => {
+app.get("/api/proj-icon/:_proj", (req, res) => {
   try {
     const proj = req.params._proj;
     if (!proj) {
@@ -138,7 +141,7 @@ app.get("/proj-icon/:_proj", (req, res) => {
   }
 });
 
-app.get("/proj-img", (req, res) => {
+app.get("/api/proj-img", (req, res) => {
   try {
     const proj = req.query.proj;
     const img = req.query.img;
@@ -154,27 +157,7 @@ app.get("/proj-img", (req, res) => {
   }
 });
 
-app.post("/download-url", async (req, res) => {
-  try {
-    const { fileName } = req.body;
-    console.log("bucketName:", config.bucketName);
-    const params = {
-      Bucket: config.bucketName,
-      Key: fileName,
-      Expires: 3600,
-    };
-    const url = s3.getSignedUrl("getObject", params);
-    console.log("type of data of url:", typeof url);
-    console.log("url:", url);
-    res.json({ downloadUrl: url });
-  } catch (err) {
-    const msg = "Error generating download URL";
-    console.error(msg, err);
-    res.status(500).send({ msg: msg, err: err });
-  }
-});
-
-app.post("/send-email", async (req, res) => {
+app.post("/api/send-email", async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
     const emailData = {
@@ -196,38 +179,39 @@ app.post("/send-email", async (req, res) => {
   }
 });
 
-app.get("*", (_, res) => {
-  const msg = "Path not defined";
-  res.send({ msg: msg });
-});
-
 const initialize = async () => {
   try {
     config = await configFn.getConfig();
-    config.email.recipients = config.email.recipients.split(",");
-    app.use(cors(config.cors));
+    app.use(cors(config.corsOptions));
 
     // Nodemailer Configuration
-    transporter = nodemailer.createTransport(config.email.credentials);
-    transporter.verify(function (error, _) {
-      if (error) {
-        console.log("Server is not ready to receive messages");
-        console.log(error);
-      } else {
-        console.log("Server is ready to take our messages");
-      }
-    });
+    // transporter = nodemailer.createTransport(config.email.credentials);
+    // transporter.verify(function (error, _) {
+    //   if (error) {
+    //     console.log("Server is not ready to receive messages");
+    //     console.log(error);
+    //   } else {
+    //     console.log("Server is ready to take our messages");
+    //   }
+    // });
 
     // HTTPS Server Configuration
-    const httpsOptions = {
-      key: fs.readFileSync(config.httpsServer.privateKey),
-      cert: fs.readFileSync(config.httpsServer.certificate),
-    };
+    // const httpsOptions = {
+    //   key: fs.readFileSync(config.httpsServer.privateKey),
+    //   cert: fs.readFileSync(config.httpsServer.certificate),
+    // };
 
-    server = https.createServer(httpsOptions, app);
+    // server = https.createServer(httpsOptions, app);
 
-    server.listen(config.port, () => {
+    app.use('/api/downloads', express.static(config.downloadsFolder));
+
+    app.listen(config.port, () => {
       console.log(`Listening on port ${config.port}`);
+    });
+
+    app.get("/api/*", (_, res) => {
+      const msg = "API route not defined";
+      res.send({ msg: msg });
     });
   } catch (err) {
     console.error("Error initializing server.\n", err);

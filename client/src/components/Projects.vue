@@ -12,12 +12,13 @@
           <li>
             Click to
             <a
-              v-if="projDownloadUrlIsString"
-              :href="projDownloadUrl"
+              v-if="currentProjectPopup.app && currentProjectPopup.app.fileRoute"
+              :href="`${$config.serverUrl}${currentProjectPopup.app.fileRoute}`"
               class="link popup-link-download"
               download
-              >Download</a
             >
+              Download
+            </a>
             <a v-else><del>Download</del></a>
             to get the <b>{{ currentProjectPopup.name }}.zip</b> file
           </li>
@@ -77,6 +78,14 @@
         />
         <h1>My Projects</h1>
       </div>
+      <div v-if="isLoadingProjects" class="spinner">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div v-if="errorRetrievingProjects">
+        ❌ No projects retrieved
+      </div>
       <ul class="projs-list">
         <li v-for="(proj, index) in projects" :key="index">
           <a :href="'#' + proj.name" class="link proj-card">
@@ -117,13 +126,13 @@
       <span v-html="proj.description" class="proj-description"></span>
       <div class="proj-btns">
         <a
-          v-if="proj.downloadable"
+          v-if="proj.app.type === 'download'"
           @click="openPopup(projIndex)"
           class="button"
         >
           Download
         </a>
-        <a v-else :href="proj.url" target="_blank" class="button">Go to App</a>
+        <a v-else :href="proj.app.url" target="_blank" class="button">Go to App</a>
       </div>
       <a :href="proj.github" target="_blank" class="link check-github"
         ><b>Check it on GitHub ↗</b>
@@ -146,16 +155,17 @@
 <script>
 import mixin from "@/mixin.js";
 import "@/styles/Projects.css";
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   name: "ProjectsComponent",
   data() {
     return {
       projects: [],
+      isLoadingProjects: true,
+      errorRetrievingProjects: false,
       isIndexBtnShown: false,
       popupProjIndex: null,
-      projDownloadUrl: null,
       carouselProjIndex: null,
       carouselImgIndex: null,
     };
@@ -165,7 +175,6 @@ export default {
     window.addEventListener("scroll", this.checkScrollPos);
     this.updateRoute(this.$route.path);
     await this.fetchProjects();
-    await this.checkDownloadable();
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.checkScrollPos);
@@ -177,9 +186,6 @@ export default {
       }
       return null;
     },
-    projDownloadUrlIsString() {
-      return typeof this.projDownloadUrl === "string";
-    },
     currentProjectCarousel() {
       if (this.carouselProjIndex !== null) {
         return this.projects[this.carouselProjIndex];
@@ -190,12 +196,13 @@ export default {
   methods: {
     async fetchProjects() {
       try {
+        console.log("nueva config (serverUrl): ", this.$config.serverUrl);
+        await new Promise((resolve) => setTimeout(resolve, 1500));
         const res = await fetch(`${this.$config.serverUrl}/projects`);
         const rawProjects = await res.json();
 
         const projectsWithIcons = await Promise.all(
           rawProjects.map(async (proj) => {
-            console.log();
             const iconRes = await fetch(
               `${this.$config.serverUrl}/proj-icon/${proj.name}`
             );
@@ -231,35 +238,19 @@ export default {
           this.projects = parsedProjects;
         }
       } catch (error) {
-        console.error("Error fetching projects", error);
-      }
-    },
-    async checkDownloadable() {
-      for (let i = 0; i < this.projects.length; i++) {
-        const proj = this.projects[i];
-        let downloadable = false;
-        if (proj.url.length === 0) {
-          downloadable = true;
-        }
-        this.projects[i]["downloadable"] = downloadable;
+        this.errorRetrievingProjects = true;
+      } finally {
+        this.isLoadingProjects = false;
       }
     },
     checkScrollPos() {
       this.isIndexBtnShown = window.scrollY !== 0;
     },
-    async getProjUrl() {
-      const res = await axios.post(`${this.$config.serverUrl}/download-url`, {
-        fileName: `${this.currentProjectPopup.name}.zip`,
-      });
-      this.projDownloadUrl = res.data.downloadUrl;
-    },
     openPopup(popupProjIndex) {
       this.popupProjIndex = popupProjIndex;
-      this.getProjUrl();
     },
     closePopup() {
       this.popupProjIndex = null;
-      this.projDownloadUrl = null;
     },
     openCarousel(carouselProjIndex, carouselImgIndex) {
       this.carouselProjIndex = carouselProjIndex;
