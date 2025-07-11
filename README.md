@@ -67,3 +67,14 @@ Hello! I am Hector, a Software Developer passionate about Python programming and
 [![](https://img.icons8.com/?size=32&id=13930&format=png)](https://www.linkedin.com/in/hector-md/ "Visit my Linkedin Page")
 [![](https://img.icons8.com/?size=32&id=MFd4aKzItnZK&format=png)](mailto:contact@hnezado.com "Or contact me via e-mail") \
 [contact@hnezado.com](mailto:contact@hnezado.com "Send me an e-mail")
+
+
+## 🛠️ For Developers
+
+**Before running the backend:**
+
+1. Copy the environment example file:
+```bash
+cp server/.env.example server/.env
+```
+2. Fill in the required values in `server/.env`.
