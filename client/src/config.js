@@ -1,7 +1,6 @@
 const config = {
-  serverUrl: process.env.NODE_ENV === "production"
-    ? "https://hnezado.com:3100/api"
-    : "http://192.168.1.50:3100/api",
+  serverUrl: "http://192.168.1.50:3100/api", // development URL
+  // serverUrl: "https://hnezado.com:3100/api", // production URL
 };
 
 export default config;
