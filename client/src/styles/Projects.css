@@ -90,11 +90,15 @@
   text-decoration: none;
 }
 
+.proj-tools-title {
+  margin-top: 10px;
+}
+
 .proj-techs {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 20px;
+  margin: 10px;
   max-width: 800px;
   /* justify-content: space-evenly;
   min-width: 400px; */

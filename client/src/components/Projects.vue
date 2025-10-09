@@ -113,7 +113,7 @@
         class="proj-wip"
       />
       <div class="techs">
-        <h6>Development tools and technologies:</h6>
+        <h6 class="proj-tools-title">Development tools and technologies:</h6>
         <div class="proj-techs">
           <span
             v-for="tech in proj.technologies"

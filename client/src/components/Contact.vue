@@ -16,13 +16,13 @@
     <span>
       Or if you prefer you can send me an email directly to <br />
       <a
-        :href="`mailto:hnezado@gmail.com?subject=<From%20${
+        :href="`mailto:contact@hnezado.dev?subject=<From%20${
           formData.name
         }>${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
           formData.message
         )}`"
         class="link"
-        >hnezado@gmail.com</a
+        >contact@hnezado.dev</a
       >
     </span>
   </div>

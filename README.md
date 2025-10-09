@@ -2,7 +2,7 @@
 
 Welcome to my Creative Hub: Where All of My Projects Come Together.
 
-Portfolio's URL: https://hnezado.com/
+Portfolio's URL: https://hnezado.dev/
 
 ---
 
@@ -65,8 +65,8 @@ Hello! I am Hector, a Software Developer passionate about Python programming and
 
 [![](https://img.icons8.com/?size=32&id=AZOZNnY73haj&format=png)](https://github.com/hnezado "Visit my Github Page")
 [![](https://img.icons8.com/?size=32&id=13930&format=png)](https://www.linkedin.com/in/hector-md/ "Visit my Linkedin Page")
-[![](https://img.icons8.com/?size=32&id=MFd4aKzItnZK&format=png)](mailto:contact@hnezado.com "Or contact me via e-mail") \
-[contact@hnezado.com](mailto:contact@hnezado.com "Send me an e-mail")
+[![](https://img.icons8.com/?size=32&id=MFd4aKzItnZK&format=png)](mailto:contact@hnezado.dev "Or contact me via e-mail") \
+[contact@hnezado.dev](mailto:contact@hnezado.dev "Send me an e-mail")
 
 
 ## 🛠️ For Developers
