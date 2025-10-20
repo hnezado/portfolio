@@ -2,7 +2,7 @@
 
 File to Edit:
 
-    /server/data/projects.json
+    /server/public/projects.json
 
 ## Template
 

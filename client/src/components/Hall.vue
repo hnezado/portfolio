@@ -40,12 +40,12 @@
                 <a
                   class="link-light"
                   target="_blank"
-                  href="data/cv_hector_martinez.pdf"
+                  :href="`${this.$config.serverUrl}/static/cv_hector_martinez.pdf`"
                   >CV</a
                 >
                 (<a
                   class="link-light"
-                  href="data/cv_hector_martinez.pdf"
+                  :href="`${this.$config.serverUrl}/cv`"
                   download
                   >download</a
                 >).
@@ -137,12 +137,27 @@ export default {
     this.elementsToObserve.forEach((args) => this.observeElement(...args));
   },
   methods: {
+    async fetchPicture() {
+      try {
+        const res = await fetch(
+          `${this.$config.serverUrl}/static/profile_picture.webp`
+        );
+        const blob = await res.blob();
+        this.profilePic = URL.createObjectURL(blob);
+      } catch (err) {
+        const msg = `Error fetching picture`;
+        console.error(msg, err);
+      }
+    },
     async fetchSkills() {
       try {
-        const res = await fetch(`${this.$config.serverUrl}/skills`, {
-          method: "GET",
-          mode: "cors",
-        });
+        const res = await fetch(
+          `${this.$config.serverUrl}/static/skills.json`,
+          {
+            method: "GET",
+            mode: "cors",
+          }
+        );
         const data = await res.json();
         if (Array.isArray(data)) {
           if (data.length > 0) {
@@ -157,7 +172,7 @@ export default {
       this.skills.forEach(async (skill) => {
         try {
           const res = await fetch(
-            `${this.$config.serverUrl}/logo/${skill.name}`
+            `${this.$config.serverUrl}/static/images/logos/${skill.name}.svg`
           );
           const blob = await res.blob();
           this.logos[skill.name] = URL.createObjectURL(blob);
@@ -166,16 +181,6 @@ export default {
           console.error(msg);
         }
       });
-    },
-    async fetchPicture() {
-      try {
-        const res = await fetch(`${this.$config.serverUrl}/profile-picture`);
-        const blob = await res.blob();
-        this.profilePic = URL.createObjectURL(blob);
-      } catch (err) {
-        const msg = `Error fetching picture`;
-        console.error(msg, err);
-      }
     },
     getCarouselSpeed() {
       const width = window.innerWidth;

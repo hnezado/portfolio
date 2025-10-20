@@ -6,6 +6,7 @@ require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 const getConfig = async () => {
   return {
+    publicUrl: process.env.PUBLIC_URL,
     port: process.env.PORT,
     downloadsFolder: process.env.DOWNLOADS_FOLDER,
     corsOptions: {

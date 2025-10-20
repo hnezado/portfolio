@@ -12,7 +12,9 @@
           <li>
             Click to
             <a
-              v-if="currentProjectPopup.app && currentProjectPopup.app.fileRoute"
+              v-if="
+                currentProjectPopup.app && currentProjectPopup.app.fileRoute
+              "
               :href="`${$config.serverUrl}${currentProjectPopup.app.fileRoute}`"
               class="link popup-link-download"
               download
@@ -83,9 +85,7 @@
         <div></div>
         <div></div>
       </div>
-      <div v-if="errorRetrievingProjects">
-        ❌ No projects retrieved
-      </div>
+      <div v-if="errorRetrievingProjects">❌ No projects retrieved</div>
       <ul class="projs-list">
         <li v-for="(proj, index) in projects" :key="index">
           <a :href="'#' + proj.name" class="link proj-card">
@@ -132,7 +132,9 @@
         >
           Download
         </a>
-        <a v-else :href="proj.app.url" target="_blank" class="button">Go to App</a>
+        <a v-else :href="proj.app.url" target="_blank" class="button"
+          >Go to App</a
+        >
       </div>
       <a :href="proj.github" target="_blank" class="link check-github"
         ><b>Check it on GitHub ↗</b>
@@ -196,47 +198,11 @@ export default {
   methods: {
     async fetchProjects() {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1500));
         const res = await fetch(`${this.$config.serverUrl}/projects`);
         const rawProjects = await res.json();
-
-        const projectsWithIcons = await Promise.all(
-          rawProjects.map(async (proj) => {
-            const iconRes = await fetch(
-              `${this.$config.serverUrl}/proj-icon/${proj.name}`
-            );
-            if (iconRes.ok) {
-              const iconBlob = await iconRes.blob();
-              proj.iconUrl = URL.createObjectURL(iconBlob);
-            } else {
-              proj.iconUrl = null;
-            }
-            return proj;
-          })
-        );
-
-        const parsedProjects = await Promise.all(
-          projectsWithIcons.map(async (proj) => {
-            const imagePromises = [];
-            for (let i = 1; i <= proj.numImages; i++) {
-              const imageRes = await fetch(
-                `${this.$config.serverUrl}/proj-img?proj=${proj.name}&img=img_${i}.gif`
-              );
-              if (imageRes.ok) {
-                const imageBlob = await imageRes.blob();
-                const imageUrl = URL.createObjectURL(imageBlob);
-                imagePromises.push(imageUrl);
-              }
-            }
-            proj.imgsPaths = await Promise.all(imagePromises);
-            return proj;
-          })
-        );
-
-        if (Array.isArray(parsedProjects) && parsedProjects.length > 0) {
-          this.projects = parsedProjects;
-        }
+        this.projects = rawProjects;
       } catch (error) {
+        console.error("Error fetching projects", error);
         this.errorRetrievingProjects = true;
       } finally {
         this.isLoadingProjects = false;

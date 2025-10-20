@@ -59,7 +59,7 @@ Hello! I am Hector, a Software Developer passionate about Python programming and
 
 - **Description**: Hangman-style game where players try to guess letters in a hidden word to save a witch from being hanged.
 - **GitHub Repository**: https://github.com/hnezado/HangTheWitch
-- **Download**: https://portfolio.hnezado.com/projects#hangTheWitch
+- **Download**: https://portfolio.hnezado.com/downloads/hangTheWitch
 
 ## 🔗 Contact Me
 
@@ -70,11 +70,4 @@ Hello! I am Hector, a Software Developer passionate about Python programming and
 
 
 ## 🛠️ For Developers
-
-**Before running the backend:**
-
-1. Copy the environment example file:
-```bash
-cp server/.env.example server/.env
-```
-2. Fill in the required values in `server/.env`.
+Instructions for running the backend locally are in [DEVELOPMENT.md](DEVELOPMENT.md).
