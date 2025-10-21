@@ -1,0 +1,127 @@
+[
+  {
+    "name": "ecoBrico",
+    "fullName": "EcoBrico",
+    "description": {
+      "en": "",
+      "es": ""
+    },
+    "app": {
+      "type": "webapp",
+      "url": "https://eco-brico.hnezado.dev"
+    },
+    "github": "https://github.com/hnezado/eco-brico",
+    "technologies": []
+  },
+  {
+    "name": "secretSanta",
+    "fullName": "Secret Santa",
+    "description": {
+      "en": "",
+      "es": ""
+    },
+    "app": {
+      "type": "download"
+    },
+    "github": "https://github.com/hnezado/secret_santa",
+    "technologies": []
+  },
+  {
+    "name": "setorium",
+    "fullName": "Setorium",
+    "description": {
+      "en": "Setorium is a simple web application designed to identify mushrooms from photos using a machine learning model. Users receive the probability of an accurate identification along with detailed characteristics of the most likely mushroom species. If accessed on a mobile device, the app allows direct camera access. Otherwise, users can drag and drop or manually upload images.<br><br>The application was developed as the final project of a Data Science Bootcamp by an outstanding team of three, including myself. The Web Scrapping to obtain images for training and testing the AI model was performed using <b>Selenium</b>. The core data processing is powered entirely by <b>Python</b>, and the web application is built with <b>Flask</b>.",
+      "es": "Setorium es una aplicación web sencilla diseñada para identificar hongos a partir de fotografías mediante un modelo de aprendizaje automático. Los usuarios reciben la probabilidad de una identificación correcta junto con las características detalladas de las especies de hongos más probables. Si se accede desde un dispositivo móvil, la aplicación permite el acceso directo a la cámara. De lo contrario, los usuarios pueden arrastrar y soltar o subir imágenes manualmente.<br><br>La aplicación se desarrolló como proyecto final de un Bootcamp de Data Science por un equipo destacado de tres personas, incluyendo a mí mismo. El Web Scraping para obtener imágenes para entrenar y probar el modelo de IA se realizó utilizando <b>Selenium</b>. El procesamiento principal de los datos está completamente basado en <b>Python</b>, y la aplicación web está construida con <b>Flask</b>."
+    },
+    "app": {
+      "type": "webapp",
+      "url": "https://setorium.hnezado.dev"
+    },
+    "github": "https://github.com/Setorium",
+    "technologies": ["Python", "Flask"]
+  },
+  {
+    "name": "applant",
+    "fullName": "Applant",
+    "description": {
+      "en": "Applant is a comprehensive web application featuring a botanical insights blog and a plant e-store. Users can filter plants by several criteria and add desired items to their cart, with a functional payment system integrated with Stripe. User roles include a seller (administrator) with blog and stock management privileges and a customer with shopping cart, favorite products and blog posts likes options.<br><br>The Frontend was developed mainly through <b>React</b> and the Backend using <b>MongoDB (Mongoose)</b>, <b>Node.js (Express)</b> and <b>Stripe</b>. This project showcases the culmination of a Full-Stack Web Development Bootcamp, completed by a wonderful team of three in just over a week.",
+      "es": "Applant es una aplicación web integral que incluye un blog de información botánica y una tienda online de plantas. Los usuarios pueden filtrar las plantas según varios criterios y añadir los artículos deseados a su carrito, con un sistema de pago funcional integrado con Stripe. Los roles de usuario incluyen un vendedor (administrador) con privilegios de gestión del blog y del stock, y un cliente con opciones de carrito de compras, productos favoritos y ‘likes’ en publicaciones del blog.<br><br>El frontend se desarrolló principalmente con <b>React</b> y el backend utilizando <b>MongoDB (Mongoose)</b>, <b>Node.js (Express)</b> y <b>Stripe</b>. Este proyecto representa la culminación de un Bootcamp de Desarrollo Web Full-Stack, completado por un equipo maravilloso de tres personas en poco más de una semana."
+    },
+    "app": {
+      "type": "webapp",
+      "url": "https://applant.hnezado.dev"
+    },
+    "github": "https://github.com/hnezado/applant",
+    "technologies": [
+      "Mongo DB",
+      "Express",
+      "Node.js",
+      "React",
+      "Axios",
+      "HTML",
+      "SASS"
+    ]
+  },
+  {
+    "name": "alloyMeApp",
+    "fullName": "Alloy Me App",
+    "description": {
+      "en": "Alloy Me App is an interactive chemistry learning web app designed to engage users in exploring chemical elements and alloys specifically. Users can create accounts to access personalized study materials and quizzes, enhancing their knowledge and understanding of chemistry concepts. In addition, admin users have privileges to manage users, alloys, and quizzes.<br><br>Developed primarily in <b>JavaScript</b>, <b>HTML</b>, <b>CSS (Sass)</b>, <b>NodeJS (Express)</b> and <b>MongoDB (Mongoose)</b> using <b>Handlebars</b> to render the views, as the final project for the Backend module of a Full-Stack Web Development Bootcamp.",
+      "es": "Alloy Me App es una aplicación web interactiva de aprendizaje de química diseñada para involucrar a los usuarios en la exploración de elementos químicos y aleaciones. Los usuarios pueden crear cuentas para acceder a materiales de estudio y cuestionarios personalizados, mejorando su conocimiento y comprensión de los conceptos de química. Además, los usuarios administradores tienen privilegios para gestionar usuarios, aleaciones y cuestionarios.<br><br>Desarrollada principalmente en <b>JavaScript</b>, <b>HTML</b>, <b>CSS (Sass)</b>, <b>NodeJS (Express)</b> y <b>MongoDB (Mongoose)</b> utilizando <b>Handlebars</b> para renderizar las vistas, como proyecto final del módulo de Backend de un Bootcamp de Desarrollo Web Full-Stack."
+    },
+    "app": {
+      "type": "webapp",
+      "url": "https://alloy-me-app.hnezado.dev"
+    },
+    "github": "https://github.com/hnezado/AlloyMeApp",
+    "technologies": [
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "Sass",
+      "NodeJS",
+      "Express",
+      "MongoDB",
+      "Mongoose",
+      "Handlebars",
+      "Passport",
+      "Bcrypt",
+      "Atlas MongoDB",
+      "VSCode"
+    ]
+  },
+  {
+    "name": "toEatOrNotToEat",
+    "fullName": "To Eat or not To Eat",
+    "description": {
+      "en": "To Eat or Not To Eat is a survival game where players must manage their hunger and thirst to survive in a forest environment. Players have to search for food and water, and avoid hazards to stay alive. The game features a dynamic hunger and thirst system, mechanics for cooking food, and environmental dangers that players must avoid.<br><br>Developed primarily in <b>JavaScript</b>, <b>HTML</b> and <b>CSS</b> as the final project for the Frontend module of a Full-Stack Web Development Bootcamp.",
+      "es": "To Eat or Not To Eat es un juego de supervivencia donde los jugadores deben gestionar su hambre y sed para sobrevivir en un entorno forestal. Los jugadores tienen que buscar comida y agua, y evitar peligros para mantenerse con vida. El juego cuenta con un sistema dinámico de hambre y sed, mecánicas para cocinar alimentos y peligros ambientales que los jugadores deben esquivar.<br><br>Desarrollado principalmente en <b>JavaScript</b>, <b>HTML</b> y <b>CSS</b> como proyecto final del módulo de Frontend de un Bootcamp de Desarrollo Web Full-Stack."
+    },
+    "app": {
+      "type": "webapp",
+      "url": "https://to-eat-or-not-to-eat.hnezado.dev"
+    },
+    "github": "https://github.com/hnezado/ToEatOrNotToEat",
+    "technologies": [
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "Canvas",
+      "Bootstrap",
+      "VSCode"
+    ]
+  },
+  {
+    "name": "hangTheWitch",
+    "fullName": "Hang The Witch",
+    "description": {
+      "en": "Hang The Witch is a hangman-style game where players try to guess letters in a hidden word to save a witch from being hanged. The game features a difficulty select screen and an in-game menu that allows to mute sound/music among other options.<br><br>Developed mainly in <b>Python</b> using <b>Pygame</b> and <b>Random-words</b> for word generation.<br><br><em style=\"font-size: 0.7rem;\">*Note: All images and models were created by me using Photoshop and Blender.</em>",
+      "es": "Hang The Witch es un juego tipo ahorcado donde los jugadores intentan adivinar letras de una palabra oculta para salvar a una bruja de ser colgada. El juego cuenta con una pantalla de selección de dificultad y un menú dentro del juego que permite silenciar el sonido/música, entre otras opciones.<br><br>Desarrollado principalmente en <b>Python</b> utilizando <b>Pygame</b> y <b>Random-words</b> para la generación de palabras.<br><br><em style=\"font-size: 0.7rem;\">*Nota: Todas las imágenes y modelos fueron creados por mí usando Photoshop y Blender.</em>"
+    },
+    "app": {
+      "type": "download"
+    },
+    "github": "https://github.com/hnezado/HangTheWitch",
+    "technologies": ["Python", "Pygame", "Random-Words", "Pycharm"]
+  }
+]

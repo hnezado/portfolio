@@ -198,6 +198,7 @@ export default {
   methods: {
     async fetchProjects() {
       try {
+        await new Promise((resolve) => setTimeout(resolve, 1500));
         const res = await fetch(`${this.$config.serverUrl}/projects`);
         const rawProjects = await res.json();
         this.projects = rawProjects;

@@ -4,9 +4,7 @@ const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, ".env") });
 const configFn = require("./config/default");
 const { registerRoutes } = require("./routes");
-// const https = require("https");
-// const fsPromises = require("fs/promises");
-// const nodemailer = require("nodemailer");
+const nodemailer = require("nodemailer");
 
 const app = express();
 
@@ -19,23 +17,16 @@ const initialize = async () => {
     app.use(cors(config.corsOptions));
 
     // Nodemailer Configuration
-    // const transporter = nodemailer.createTransport(config.email.credentials);
-    // transporter.verify(function (error, _) {
-    //   if (error) {
-    //     console.log("Server is not ready to receive messages");
-    //     console.log(error);
-    //   } else {
-    //     console.log("Server is ready to take our messages");
-    //   }
-    // });
-
-    // HTTPS Server Configuration
-    // const httpsOptions = {
-    //   key: fs.readFileSync(config.httpsServer.privateKey),
-    //   cert: fs.readFileSync(config.httpsServer.certificate),
-    // };
-
-    // const server = https.createServer(httpsOptions, app);
+    const transporter = nodemailer.createTransport(config.email.credentials);
+    transporter.verify(function (error, success) {
+      if (error) {
+        console.log("Mail server not ready to receive messages");
+        console.log(error);
+      } else {
+        console.log("Mail server is ready to take messages");
+      }
+    });
+    app.locals.transporter = transporter;
 
     // Routes
     registerRoutes(app, config);

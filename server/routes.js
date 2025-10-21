@@ -77,6 +77,8 @@ function registerRoutes(app, config) {
   });
 
   app.post("/send-email", async (req, res) => {
+    const transporter = req.app.locals.transporter;
+
     try {
       const { name, email, subject, message } = req.body;
       const emailData = {
