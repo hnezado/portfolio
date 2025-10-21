@@ -19,7 +19,7 @@
               class="link popup-link-download"
               download
             >
-              Download
+              <span>Download</span>
             </a>
             <a v-else><del>Download</del></a>
             to get the <b>{{ currentProjectPopup.name }}.zip</b> file

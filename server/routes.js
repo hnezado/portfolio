@@ -67,6 +67,21 @@ function registerRoutes(app, config) {
               `${config.publicUrl}/static/images/projects/${project.name}/${file}`
           );
         }
+
+        // Download zip file route
+        if (
+          project.app &&
+          project.app.type &&
+          project.app.type === "download"
+        ) {
+          const filePath = path.join(
+            config.downloadsFolder,
+            `${project.name}.zip`
+          );
+          if (fs.existsSync(filePath)) {
+            project.app.fileRoute = `/downloads/${project.name}.zip`;
+          }
+        }
       });
 
       res.json(projects);
