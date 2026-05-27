@@ -45,7 +45,7 @@
                 >
                 (<a
                   class="link-light"
-                  :href="`${this.$config.serverStaticUrl}/cv`"
+                  :href="`${this.$config.serverStaticUrl}/cv_hector_martinez.pdf`"
                   download
                   >download</a
                 >).

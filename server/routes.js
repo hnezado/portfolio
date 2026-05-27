@@ -23,17 +23,6 @@ function registerRoutes(app, config) {
     }),
   );
 
-  // API routes
-  app.get("/api/cv", (req, res) => {
-    const filePath = path.join(__dirname, "public", "cv_hector_martinez.pdf");
-    res.setHeader(
-      "Content-Disposition",
-      'attachment; filename="cv_hector_martinez.pdf"',
-    );
-    res.setHeader("Content-Type", "application/pdf");
-    res.download(filePath);
-  });
-
   app.get("/api/projects", (_, res) => {
     try {
       const projectsFilePath = path.join(__dirname, "public", "projects.json");

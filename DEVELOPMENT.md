@@ -14,17 +14,19 @@ cp server/.env.example server/.env
 
 ## Port Organization & PM2 Setup
 
-- Each project uses a 100-port block.
-- Frontend = block start port.
-- Backend = block start +10.
-- Additional microservices can use +20, +30, etc.
+- Each project is assigned a reserved 100-port block.
+- Frontend traffic is served via port 80 through domain routing (Cloudflare Tunnel + nginx).
+- Backend services start at the base port of each block.
+- Additional microservices use +10, +20, etc. offsets.
 
-| Project       | Frontend | Backend |
-|---------------|---------|--------|
-| Portfolio     | 10000   | 10010  |
-| To Eat        | 10100   | 10110  |
-| Alloy Me      | 10200   | 10210  |
-| ...           | ...     | ...    |
+| Project    | Frontend | Backend |
+| ---------- | -------- | ------- |
+| Portfolio  | 80       | 10000   |
+| TEONTE     | 80       | 10100   |
+| AlloyMeApp | 80       | 10200   |
+| ...        | ...      | ...     |
+
+> Some projects may only include a frontend, but the port range is still reserved.
 
 **PM2 Management:**
 
@@ -48,7 +50,6 @@ pm2 startup
 - Tunnel / proxy configuration (Cloudflare, `cloudflared`) should match the port setup.
 - For local development, document your `.env` variables clearly.
 - When moving the server to a new machine or network, verify:
-
   - PM2 processes are running.
   - `cloudflared` tunnel is active.
   - DNS records point to the correct hostnames.
@@ -59,6 +60,7 @@ pm2 startup
 
 - Purpose: Expose your local backend/frontend securely to the internet without opening ports in the router.
 - Command to run:
+
 ```bash
 cloudflared tunnel run portfolio
 ```
@@ -70,11 +72,16 @@ tunnel: YOUR_TUNNEL_ID
 credentials-file: /home/USER/.cloudflared/YOUR_TUNNEL_CREDENTIALS.json
 
 ingress:
-    # Frontend
+    # Portfolio
   - hostname: portfolio.hnezado.dev # (public domain)
-    service: http://localhost:10000  # (local server URL + port)
-    # Backend
-  - hostname: api.portfolio.hnezado.dev # (public domain)
-    service: http://localhost:10010  # (local server URL + port)
+    service: http://localhost:80    # (local server URL + port)
+    # TEONTE
+  - hostname: to-eat-or-not-to-eat.hnezado.dev  # (public domain)
+    service: http://localhost:80                # (local server URL + port)
+    # AlloyMeApp frontend/backend
+  - hostname: alloy-me-app.hnezado.dev  # (public domain)
+    service: http://localhost:80        # (local server URL + port)
+  ...
+    # Fallback
   - service: http_status:404
 ```
