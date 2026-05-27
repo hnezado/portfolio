@@ -19,7 +19,7 @@
         :href="`mailto:contact@hnezado.dev?subject=<From%20${
           formData.name
         }>${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
-          formData.message
+          formData.message,
         )}`"
         class="link"
         >contact@hnezado.dev</a
@@ -53,13 +53,13 @@ export default {
     async sendEmail() {
       try {
         const res = await axios.post(
-          `${this.$config.serverUrl}/send-email`,
+          `${this.$config.serverApiUrl}/send-email`,
           this.formData,
           {
             headers: {
               "Content-Type": "application/json",
             },
-          }
+          },
         );
 
         // Clear and reset form fields

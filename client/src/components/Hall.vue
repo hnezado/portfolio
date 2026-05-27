@@ -40,12 +40,12 @@
                 <a
                   class="link-light"
                   target="_blank"
-                  :href="`${this.$config.serverUrl}/static/cv_hector_martinez.pdf`"
+                  :href="`${this.$config.serverStaticUrl}/cv_hector_martinez.pdf`"
                   >CV</a
                 >
                 (<a
                   class="link-light"
-                  :href="`${this.$config.serverUrl}/cv`"
+                  :href="`${this.$config.serverStaticUrl}/cv`"
                   download
                   >download</a
                 >).
@@ -140,7 +140,7 @@ export default {
     async fetchPicture() {
       try {
         const res = await fetch(
-          `${this.$config.serverUrl}/static/profile_picture.webp`
+          `${this.$config.serverStaticUrl}/profile_picture.webp`,
         );
         const blob = await res.blob();
         this.profilePic = URL.createObjectURL(blob);
@@ -151,13 +151,10 @@ export default {
     },
     async fetchSkills() {
       try {
-        const res = await fetch(
-          `${this.$config.serverUrl}/static/skills.json`,
-          {
-            method: "GET",
-            mode: "cors",
-          }
-        );
+        const res = await fetch(`${this.$config.serverStaticUrl}/skills.json`, {
+          method: "GET",
+          mode: "cors",
+        });
         const data = await res.json();
         if (Array.isArray(data)) {
           if (data.length > 0) {
@@ -172,7 +169,7 @@ export default {
       this.skills.forEach(async (skill) => {
         try {
           const res = await fetch(
-            `${this.$config.serverUrl}/static/images/logos/${skill.name}.svg`
+            `${this.$config.serverStaticUrl}/images/logos/${skill.name}.svg`,
           );
           const blob = await res.blob();
           this.logos[skill.name] = URL.createObjectURL(blob);

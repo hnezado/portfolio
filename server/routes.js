@@ -12,7 +12,7 @@ function registerRoutes(app, config) {
       maxAge: "7d", // Cache for 7 days (improves performance)
       etag: true, // Allow conditional cache (If-None-Match)
       immutable: true, // Content doesn't change
-    })
+    }),
   );
 
   app.use(
@@ -20,21 +20,21 @@ function registerRoutes(app, config) {
     express.static(path.join(__dirname, "public"), {
       maxAge: 0, // disables browser caching (0ms data cached)
       etag: false, // disables ETag headers (files aren't cached based on hash)
-    })
+    }),
   );
 
   // API routes
-  app.get("/cv", (req, res) => {
+  app.get("/api/cv", (req, res) => {
     const filePath = path.join(__dirname, "public", "cv_hector_martinez.pdf");
     res.setHeader(
       "Content-Disposition",
-      'attachment; filename="cv_hector_martinez.pdf"'
+      'attachment; filename="cv_hector_martinez.pdf"',
     );
     res.setHeader("Content-Type", "application/pdf");
     res.download(filePath);
   });
 
-  app.get("/projects", (_, res) => {
+  app.get("/api/projects", (_, res) => {
     try {
       const projectsFilePath = path.join(__dirname, "public", "projects.json");
       let projects = JSON.parse(fs.readFileSync(projectsFilePath));
@@ -45,7 +45,7 @@ function registerRoutes(app, config) {
           "public",
           "images",
           "projects",
-          project.name
+          project.name,
         );
 
         // Icon
@@ -64,7 +64,7 @@ function registerRoutes(app, config) {
           });
           project.imgsPaths = files.map(
             (file) =>
-              `${config.publicUrl}/static/images/projects/${project.name}/${file}`
+              `${config.publicUrl}/static/images/projects/${project.name}/${file}`,
           );
         }
 
@@ -76,7 +76,7 @@ function registerRoutes(app, config) {
         ) {
           const filePath = path.join(
             config.downloadsFolder,
-            `${project.name}.zip`
+            `${project.name}.zip`,
           );
           if (fs.existsSync(filePath)) {
             project.app.fileRoute = `/downloads/${project.name}.zip`;
@@ -91,7 +91,7 @@ function registerRoutes(app, config) {
     }
   });
 
-  app.post("/send-email", async (req, res) => {
+  app.post("/api/send-email", async (req, res) => {
     const transporter = req.app.locals.transporter;
 
     try {
